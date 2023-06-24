@@ -1460,7 +1460,7 @@ _validation_list_length(char **list)
     if (!list || !list[0])
         return 0;
 
-    while (list[i] && length <= LXW_VALIDATION_MAX_STRING_LENGTH) {
+    while (list[i] && length < LXW_VALIDATION_MAX_STRING_LENGTH) {
         /* Include commas in the length. */
         length += 1 + lxw_utf8_strlen(list[i]);
         i++;
@@ -1481,8 +1481,8 @@ _validation_list_to_csv(char **list)
     char *str;
 
     /* Create a buffer for the concatenated, and quoted, string. */
-    /* Add +3 for quotes and EOL. */
-    str = calloc(1, LXW_VALIDATION_MAX_STRING_LENGTH + 3);
+    /* Allow for 4 byte UTF-8 chars and add 3 bytes for quotes and EOL. */
+    str = calloc(1, LXW_VALIDATION_MAX_STRING_LENGTH * 4 + 3);
     if (!str)
         return NULL;
 
@@ -7959,7 +7959,7 @@ _store_array_formula(lxw_worksheet *self,
     RETURN_ON_MEM_ERROR(range, LXW_ERROR_MEMORY_MALLOC_FAILED);
 
     if (first_row == last_row && first_col == last_col)
-        lxw_rowcol_to_cell(range, first_row, last_col);
+        lxw_rowcol_to_cell(range, first_row, first_col);
     else
         lxw_rowcol_to_range(range, first_row, first_col, last_row, last_col);
 
@@ -10380,10 +10380,12 @@ worksheet_insert_image_buffer_opt(lxw_worksheet *self,
     /* Write the image buffer to a file (preferably in memory) so we can read
      * the dimensions like an ordinary file. */
 #ifdef USE_FMEMOPEN
-    image_stream = fmemopen(NULL, image_size, "w+b");
+    image_stream = fmemopen((void *) image_buffer, image_size, "rb");
+
+    if (!image_stream)
+        return LXW_ERROR_CREATING_TMPFILE;
 #else
     image_stream = lxw_tmpfile(self->tmpdir);
-#endif
 
     if (!image_stream)
         return LXW_ERROR_CREATING_TMPFILE;
@@ -10394,6 +10396,7 @@ worksheet_insert_image_buffer_opt(lxw_worksheet *self,
     }
 
     rewind(image_stream);
+#endif
 
     /* Create a new object to hold the image properties. */
     object_props = calloc(1, sizeof(lxw_object_properties));
@@ -10534,10 +10537,12 @@ worksheet_set_background_buffer(lxw_worksheet *self,
     /* Write the image buffer to a file (preferably in memory) so we can read
      * the dimensions like an ordinary file. */
 #ifdef USE_FMEMOPEN
-    image_stream = fmemopen(NULL, image_size, "w+b");
+    image_stream = fmemopen((void *) image_buffer, image_size, "rb");
+
+    if (!image_stream)
+        return LXW_ERROR_CREATING_TMPFILE;
 #else
     image_stream = lxw_tmpfile(self->tmpdir);
-#endif
 
     if (!image_stream)
         return LXW_ERROR_CREATING_TMPFILE;
@@ -10548,6 +10553,7 @@ worksheet_set_background_buffer(lxw_worksheet *self,
     }
 
     rewind(image_stream);
+#endif
 
     /* Create a new object to hold the image properties. */
     object_props = calloc(1, sizeof(lxw_object_properties));
@@ -10849,7 +10855,7 @@ worksheet_data_validation_range(lxw_worksheet *self, lxw_row_t first_row,
 
     /* Create the data validation range. */
     if (first_row == last_row && first_col == last_col)
-        lxw_rowcol_to_cell(copy->sqref, first_row, last_col);
+        lxw_rowcol_to_cell(copy->sqref, first_row, first_col);
     else
         lxw_rowcol_to_range(copy->sqref, first_row, first_col, last_row,
                             last_col);
@@ -10909,11 +10915,6 @@ worksheet_data_validation_range(lxw_worksheet *self, lxw_row_t first_row,
     /* Copy the validation list as a csv string. */
     if (validation->validate == LXW_VALIDATION_TYPE_LIST) {
         copy->value_formula = _validation_list_to_csv(validation->value_list);
-        GOTO_LABEL_ON_MEM_ERROR(copy->value_formula, mem_error);
-    }
-
-    if (validation->validate == LXW_VALIDATION_TYPE_LIST_FORMULA) {
-        copy->value_formula = lxw_strdup_formula(validation->value_formula);
         GOTO_LABEL_ON_MEM_ERROR(copy->value_formula, mem_error);
     }
 
@@ -11029,13 +11030,13 @@ worksheet_conditional_format_range(lxw_worksheet *self, lxw_row_t first_row,
 
     /* Create the data validation range. */
     if (first_row == last_row && first_col == last_col)
-        lxw_rowcol_to_cell(cond_format->sqref, first_row, last_col);
+        lxw_rowcol_to_cell(cond_format->sqref, first_row, first_col);
     else
         lxw_rowcol_to_range(cond_format->sqref, first_row, first_col,
                             last_row, last_col);
 
     /* Store the first cell string for text and date rules. */
-    lxw_rowcol_to_cell(cond_format->first_cell, first_row, last_col);
+    lxw_rowcol_to_cell(cond_format->first_cell, first_row, first_col);
 
     /* Overwrite the sqref range with a user supplied set of ranges. */
     if (user_options->multi_range) {

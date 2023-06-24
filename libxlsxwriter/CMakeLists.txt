@@ -225,8 +225,8 @@ message("zlib version: " ${ZLIB_VERSION})
 
 # MINIZIP
 if (USE_SYSTEM_MINIZIP)
-    find_package(MINIZIP NAMES unofficial-minizip REQUIRED)
-    set(MINIZIP_LIBRARIES unofficial::minizip::minizip)
+    find_package(MINIZIP "1.0" REQUIRED)
+    list(APPEND LXW_PRIVATE_INCLUDE_DIRS ${MINIZIP_INCLUDE_DIRS})
 endif()
 
 # LIBRARY
