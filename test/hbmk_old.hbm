@@ -1,0 +1,6 @@
+hbxlsxwriter.hbc
+-w3 -es2
+-I../ 
+-I../libxlsxwriter/lib -lxlsxwriter
+-I/libxlsxwriter/lib -lxlsxwriter
+-L../
