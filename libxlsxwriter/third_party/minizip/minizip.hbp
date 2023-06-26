@@ -3,7 +3,8 @@
 -hblib
 -rebuild 
 
--o${hb_targetname}
+{msvc64}-o./lib/x64/minizip
+{msvc}-o./lib/x32/minizip
 
 -hbx=
 
@@ -18,8 +19,8 @@ ioapi.c
 zip.c
 unzip.c
 iowin32.c
-minizip.c
-mztools.c
+#minizip.c
+#mztools.c
 
 
 -depkeyhead=zlib:zlib.h

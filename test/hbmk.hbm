@@ -6,7 +6,7 @@ hbxlsxwriter.hbc
 {msvc64}-L../lib/x64
 {msvc}-L../lib/x32
 {msvc64}-L../libxlsxwriter/third_party/minizip/lib/x64
-{msvc32}-L../libxlsxwriter/third_party/minizip/lib/x32
+{msvc}-L../libxlsxwriter/third_party/minizip/lib/x32
 
 -lhbxlsxwriter
 -lxlsxwriter
