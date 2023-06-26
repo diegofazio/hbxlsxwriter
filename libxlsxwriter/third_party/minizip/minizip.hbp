@@ -1,7 +1,6 @@
 -stop{hbdyn}
 
 -hblib
--inc
 -rebuild 
 
 -o${hb_targetname}

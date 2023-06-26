@@ -1,5 +1,4 @@
 -hblib
--inc
 -rebuild
 
 {msvc64}-o./lib/x64/${hb_name}
