@@ -2,7 +2,7 @@ FUNCTION hw_XlsxExport( aSheet, aOptions )
 
    LOCAL oWorkBook, oWorkSheet, oTitleFormat, aRows := {}, aHeader := {}, aRow := {}, aCol := {}, hRow := { => }, aColWidth := {}, aTitle := {}, aFooter := {}
    LOCAL hOptions := fillOptions( aOptions )
-   LOCAL nRow := 0, nCol := 0
+   LOCAL nRow := 0, nCol := 0, cStr := ""
 
    FOR EACH aRow in aSheet[ 1 ]
       IF Empty( hOptions[ 'aHeaders' ] )
@@ -57,12 +57,13 @@ FUNCTION hw_XlsxExport( aSheet, aOptions )
             ENDIF
             worksheet_set_column( oWorkSheet, nRow, nCol, aColWidth[ nCol + 1 ] )
          ELSE
-            worksheet_write_string( oWorkSheet, nRow, nCol, hRow[ aCol ] )
+            cStr := hw_ValtoChar( hRow[ aCol ] )
+            worksheet_write_string( oWorkSheet, nRow, nCol, cStr )
             IF Empty( aColWidth[ nCol + 1 ] )
                aColWidth[ nCol + 1 ] := 0
             ENDIF
-            IF aColWidth[ nCol + 1 ] < Len( AllTrim( hRow[ aCol ] ) ) * 1.2
-               aColWidth[ nCol + 1 ] := Len( AllTrim( hRow[ aCol ] ) ) * 1.2
+            IF aColWidth[ nCol + 1 ] < Len( AllTrim( cStr ) ) * 1.2
+               aColWidth[ nCol + 1 ] := Len( AllTrim( cStr ) ) * 1.2
             ENDIF
             worksheet_set_column( oWorkSheet, nRow, nCol, aColWidth[ nCol + 1 ] )
          ENDIF
@@ -87,19 +88,21 @@ FUNCTION hw_XlsxExport( aSheet, aOptions )
 
    workbook_close( oWorkBook )
 
-RETURN
+RETURN IIF( hOptions['ReturnContent'], hb_memoread( hOptions[ 'FileName' ] ), NIL )
 
 static FUNCTION fillOptions( aOptions )
 
    LOCAL aOption := {}, hOptions := { => }
+   LOCAL cTempFile := AllTrim( GetEnv( "TEMP" ) ) + "\xlsx" + StrZero( hb_RandomInt( 1, 10 ^ ( 8 - Len( 'xlsx' ) ) - 1 ), 8 - Len( 'xlsx' ), 0 ) + ".xlsx" 
 
    hb_HCaseMatch( hOptions, .F. )
    hOptions := { => }
-   hOptions[ "FileName" ]  := "libro.xlsx"
-   hOptions[ "SheetName" ] := "hoja"
-   hOptions[ "Headers" ]   := {}
-   hOptions[ "Title" ]     := {}
-   hOptions[ "Footer" ]    := {}
+   hOptions[ "FileName" ]        := cTempFile
+   hOptions[ "SheetName" ]       := "hoja"
+   hOptions[ "Headers" ]         := {}
+   hOptions[ "Title" ]           := {}
+   hOptions[ "Footer" ]          := {}
+   hOptions[ "ReturnContent" ]   := .F.
 
    FOR EACH aOption in aOptions
       hOptions[ aOption:__enumkey() ] := aOption
