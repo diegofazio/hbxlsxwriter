@@ -1,7 +1,7 @@
 FUNCTION hw_XlsxExport( aSheet, aOptions )
 
-   LOCAL oWorkBook, oWorkSheet, oTitleFormat, aRows := {}, aHeader := {}, aRow := {}, aCol := {}, hRow := { => }, aColWidth := {}, aTitle := {}, aFooter := {}
-   LOCAL hOptions := fillOptions( aOptions )
+   LOCAL oWorkBook, oWorkSheet, oTitleFormat1, oTitleFormat2, aRows := {}, aHeader := {}, aRow := {}, aCol := {}, hRow := { => }, aColWidth := {}, aTitle := {}, aFooter := {}
+   LOCAL hOptions := fillOptions( aOptions ), oFormatHeader
    LOCAL nRow := 0, nCol := 0, cStr := ""
 
    FOR EACH aRow in aSheet[ 1 ]
@@ -18,22 +18,47 @@ FUNCTION hw_XlsxExport( aSheet, aOptions )
    oWorkSheet := workbook_add_worksheet( oWorkBook, hOptions[ 'SheetName' ] )
 
    IF !Empty( hOptions[ 'Title' ] )
-      oTitleFormat := workbook_add_format( oWorkBook )
-      format_set_bold( oTitleFormat )
+      oTitleFormat1 := workbook_add_format( oWorkBook )
+      format_set_bold( oTitleFormat1 )
+      format_set_align(oTitleFormat1, LXW_ALIGN_CENTER)
+      format_set_align(oTitleFormat1, LXW_ALIGN_VERTICAL_CENTER)
+      format_set_font_size(oTitleFormat1, 14)
       IF ValType( hOptions[ 'Title' ] ) == "A"
+         oTitleFormat2 := workbook_add_format( oWorkBook )      
+         format_set_font_size(oTitleFormat2, 12)    
+         format_set_bold( oTitleFormat2 )
+         format_set_align(oTitleFormat2, LXW_ALIGN_LEFT)
+         format_set_align(oTitleFormat2, LXW_ALIGN_VERTICAL_CENTER)
          FOR EACH aTitle in hOptions[ 'Title' ]
-            worksheet_write_string( oWorkSheet, nRow, 0, aTitle, oTitleFormat )
+            if nRow == 0
+               worksheet_merge_range( oWorkSheet, nRow, 0, nRow, nCol + Len(aHeader ) - 1, aTitle, oTitleFormat1 )
+            else
+               worksheet_merge_range( oWorkSheet, nRow, 0, nRow, nCol + Len(aHeader ) - 1, aTitle, oTitleFormat2 )
+            endif
             nRow++
          NEXT
       ELSE
-         worksheet_write_string( oWorkSheet, nRow, 0, hOptions[ 'Title' ], oTitleFormat )
+         worksheet_merge_range( oWorkSheet, nRow, 0, nRow, nCol + Len(aHeader ) - 1, hOptions[ 'Title' ], oTitleFormat2 )
          nRow++
       ENDIF
    ENDIF
 
    IF !Empty( aHeader )
+
+      oFormatHeader := workbook_add_format( oWorkBook )
+      format_set_bottom(oFormatHeader, LXW_BORDER_THIN)
+      format_set_top(oFormatHeader, LXW_BORDER_THIN)
+      format_set_left(oFormatHeader, LXW_BORDER_THIN)
+      format_set_right(oFormatHeader, LXW_BORDER_THIN)
+      format_set_bottom_color(oFormatHeader, 0x808080)
+      format_set_top_color(oFormatHeader, 0x808080)
+      format_set_left_color(oFormatHeader, 0x808080)
+      format_set_right_color(oFormatHeader, 0x808080)
+      format_set_bg_color(oFormatHeader, 0xd1d1d1)
+      format_set_pattern(oFormatHeader, LXW_PATTERN_SOLID)   
+   
       FOR EACH aRow in aHeader
-         worksheet_write_string( oWorkSheet, nRow, nCol, aRow )
+         worksheet_write_string( oWorkSheet, nRow, nCol, aRow, oFormatHeader )
          nCol++
       NEXT
       nRow++
@@ -77,15 +102,15 @@ FUNCTION hw_XlsxExport( aSheet, aOptions )
       format_set_bold( oFooterFormat )
       IF ValType( hOptions[ 'Footer' ] ) == "A"
          FOR EACH aFooter in hOptions[ 'Footer' ]
-            worksheet_write_string( oWorkSheet, nRow, 0, aFooter, oFooterFormat )
+            worksheet_merge_range( oWorkSheet, nRow, 0, nRow, Len( aHeader ) - 1, aFooter, oFooterFormat )         
             nRow++
          NEXT
       ELSE
-         worksheet_write_string( oWorkSheet, nRow, 0, hOptions[ 'Footer' ], oFooterFormat )
+         worksheet_merge_range( oWorkSheet, nRow, 0, nRow, Len( aHeader ) - 1, hOptions[ 'Footer' ], oFooterFormat )         
          nRow++
       ENDIF
    ENDIF
-
+   
    workbook_close( oWorkBook )
 
 RETURN IIF( hOptions['ReturnContent'], hb_memoread( hOptions[ 'FileName' ] ), NIL )
