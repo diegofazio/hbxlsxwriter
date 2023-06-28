@@ -4,11 +4,12 @@
 FUNCTION Main()
 
    LOCAL aOptions := { ;
-      "FileName"  => "libro.xlsx", ;
-      "SheetName" => "hoja", ;
-      "Title"     => { "Titulo", "Subtitulo" }, ;
-      "Footer"    => {"Pie de pagina","caca"}, ;
-      "aHeaders"  => { 'NOMBRE', 'RECNO', 'CUIL' } ;
+      "FileName"        => "libro.xlsx", ;
+      "ReturnContent"   => .T., ;   // La funcion devuelve el contenido del excel
+      "Title"           => { "Titulo", "Subtitulo" }, ;
+      "Footer"          => {"Pie de pagina","caca"}, ;
+      "Fields"          => { 'NOMBRE', 'RECNO', 'CUIL' }, ;
+      "Headers"         => { 'Mi Nombre', 'Mi Recno', 'Mi Cuil' } ;         
       }
 
    hw_XlsxExport( Sheet(), aOptions )

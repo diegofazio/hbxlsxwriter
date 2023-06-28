@@ -1,15 +1,27 @@
 FUNCTION hw_XlsxExport( aSheet, aOptions )
 
-   LOCAL oWorkBook, oWorkSheet, oTitleFormat1, oTitleFormat2, aRows := {}, aHeader := {}, aRow := {}, aCol := {}, hRow := { => }, aColWidth := {}, aTitle := {}, aFooter := {}
+   LOCAL oWorkBook, oWorkSheet, oTitleFormat1, oTitleFormat2, aRows := {}, aFields := {}, aHeaders := {}, aField := {}, aRow := {}, aCol := {}, hRow := { => }, aColWidth := {}, aTitle := {}, aFooter := {}
    LOCAL hOptions := fillOptions( aOptions ), oFormatHeader
-   LOCAL nRow := 0, nCol := 0, cStr := ""
+   LOCAL nRow := 0, nCol := 0, cStr := "", nCount := 1
 
    FOR EACH aRow in aSheet[ 1 ]
-      IF Empty( hOptions[ 'aHeaders' ] )
-         AAdd( aHeader, aRow:__enumkey() )
+      IF Empty( hOptions[ 'Fields' ] )
+         AAdd( aFields, aRow:__enumkey() )
+         IF Empty( hOptions[ 'Headers' ] )
+            AAdd( aHeaders, aRow:__enumkey() )            
+         ELSE
+            if nCount > Len( hOptions[ 'Headers' ] )
+               AAdd( aHeaders, aRow:__enumkey() )            
+            else
+               AAdd( aHeaders, hOptions[ 'Headers' ][nCount] )                     
+            ENDIF
+            nCount ++
+         ENDIF
       ELSE
-         IF ( hb_AScan( hOptions[ 'aHeaders' ], aRow:__enumkey(),, .F. ) > 0 )
-            AAdd( aHeader, aRow:__enumkey() )
+         IF ( hb_AScan( hOptions[ 'Fields' ], aRow:__enumkey(),, .F. ) > 0 )
+            AAdd( aFields, aRow:__enumkey() )
+            AAdd( aHeaders, hOptions[ 'Headers' ][nCount] )
+            nCount ++            
          ENDIF
       ENDIF
    NEXT
@@ -31,19 +43,18 @@ FUNCTION hw_XlsxExport( aSheet, aOptions )
          format_set_align( oTitleFormat2, LXW_ALIGN_VERTICAL_CENTER )
          FOR EACH aTitle in hOptions[ 'Title' ]
             IF nRow == 0
-               worksheet_merge_range( oWorkSheet, nRow, 0, nRow, Len( aHeader ) - 1, aTitle, oTitleFormat1 )
+               worksheet_merge_range( oWorkSheet, nRow, 0, nRow, Len( aFields ) - 1, aTitle, oTitleFormat1 )
             ELSE
-               worksheet_merge_range( oWorkSheet, nRow, 0, nRow, Len( aHeader ) - 1, aTitle, oTitleFormat2 )
+               worksheet_merge_range( oWorkSheet, nRow, 0, nRow, Len( aFields ) - 1, aTitle, oTitleFormat2 )
             ENDIF
             nRow++
          NEXT
       ELSE
-         worksheet_merge_range( oWorkSheet, nRow, 0, nRow, Len( aHeader ) - 1, hOptions[ 'Title' ], oTitleFormat2 )
+         worksheet_merge_range( oWorkSheet, nRow, 0, nRow, Len( aFields ) - 1, hOptions[ 'Title' ], oTitleFormat2 )
          nRow++
       ENDIF
    ENDIF
-
-   IF !Empty( aHeader )
+   IF !Empty( aFields )
 
       oFormatHeader := workbook_add_format( oWorkBook )
       format_set_bottom( oFormatHeader, LXW_BORDER_THIN )
@@ -57,21 +68,21 @@ FUNCTION hw_XlsxExport( aSheet, aOptions )
       format_set_bg_color( oFormatHeader, 0xd1d1d1 )
       format_set_pattern( oFormatHeader, LXW_PATTERN_SOLID )
 
-      FOR EACH aRow in aHeader
+      FOR EACH aRow in aHeaders
          worksheet_write_string( oWorkSheet, nRow, nCol, aRow, oFormatHeader )
          nCol++
       NEXT
       nRow++
    ENDIF
 
-   FOR EACH aCol in aHeader
+   FOR EACH aCol in aHeaders
       AAdd( aColWidth, Len( AllTrim( aCol ) ) * 1.2 )
    NEXT
 
    FOR EACH aRow in aSheet
       nCol := 0
       hRow := array2Hash( aRow )
-      FOR EACH aCol in aHeader
+      FOR EACH aCol in aFields
          IF ValType( hRow[ aCol ] ) == "N"
             worksheet_write_number( oWorkSheet, nRow, nCol, hRow[ aCol ] )
             IF Empty( aColWidth[ nCol + 1 ] )
@@ -102,11 +113,11 @@ FUNCTION hw_XlsxExport( aSheet, aOptions )
       format_set_bold( oFooterFormat )
       IF ValType( hOptions[ 'Footer' ] ) == "A"
          FOR EACH aFooter in hOptions[ 'Footer' ]
-            worksheet_merge_range( oWorkSheet, nRow, 0, nRow, Len( aHeader ) - 1, aFooter, oFooterFormat )
+            worksheet_merge_range( oWorkSheet, nRow, 0, nRow, Len( aHeaders ) - 1, aFooter, oFooterFormat )
             nRow++
          NEXT
       ELSE
-         worksheet_merge_range( oWorkSheet, nRow, 0, nRow, Len( aHeader ) - 1, hOptions[ 'Footer' ], oFooterFormat )
+         worksheet_merge_range( oWorkSheet, nRow, 0, nRow, Len( aHeaders ) - 1, hOptions[ 'Footer' ], oFooterFormat )
          nRow++
       ENDIF
    ENDIF
@@ -124,6 +135,7 @@ STATIC FUNCTION fillOptions( aOptions )
    hOptions := { => }
    hOptions[ "FileName" ]        := cTempFile
    hOptions[ "SheetName" ]       := "hoja"
+   hOptions[ "Fields" ]          := {}   
    hOptions[ "Headers" ]         := {}
    hOptions[ "Title" ]           := {}
    hOptions[ "Footer" ]          := {}
