@@ -8,20 +8,24 @@ FUNCTION hw_XlsxExport( aSheet, aOptions )
       IF Empty( hOptions[ 'Fields' ] )
          AAdd( aFields, aRow:__enumkey() )
          IF Empty( hOptions[ 'Headers' ] )
-            AAdd( aHeaders, aRow:__enumkey() )            
+            AAdd( aHeaders, aRow:__enumkey() )
          ELSE
-            if nCount > Len( hOptions[ 'Headers' ] )
-               AAdd( aHeaders, aRow:__enumkey() )            
-            else
-               AAdd( aHeaders, hOptions[ 'Headers' ][nCount] )                     
+            IF nCount > Len( hOptions[ 'Headers' ] )
+               AAdd( aHeaders, aRow:__enumkey() )
+            ELSE
+               AAdd( aHeaders, hOptions[ 'Headers' ][ nCount ] )
             ENDIF
-            nCount ++
+            nCount++
          ENDIF
       ELSE
          IF ( hb_AScan( hOptions[ 'Fields' ], aRow:__enumkey(),, .F. ) > 0 )
             AAdd( aFields, aRow:__enumkey() )
-            AAdd( aHeaders, hOptions[ 'Headers' ][nCount] )
-            nCount ++            
+            IF nCount > Len( hOptions[ 'Headers' ] )
+               AAdd( aHeaders, aRow:__enumkey() )
+            ELSE
+               AAdd( aHeaders, hOptions[ 'Headers' ][ nCount ] )
+            ENDIF
+            nCount++
          ENDIF
       ENDIF
    NEXT
@@ -135,7 +139,7 @@ STATIC FUNCTION fillOptions( aOptions )
    hOptions := { => }
    hOptions[ "FileName" ]        := cTempFile
    hOptions[ "SheetName" ]       := "hoja"
-   hOptions[ "Fields" ]          := {}   
+   hOptions[ "Fields" ]          := {}
    hOptions[ "Headers" ]         := {}
    hOptions[ "Title" ]           := {}
    hOptions[ "Footer" ]          := {}
