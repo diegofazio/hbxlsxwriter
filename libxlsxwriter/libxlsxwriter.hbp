@@ -1,13 +1,15 @@
 -hblib
 -inc
 
-{msvc64}-o./lib/x64/xlsxwriter
-{msvc}-o./lib/x32/xlsxwriter
+{x86_64}-o./lib/x64/xlsxwriter
+{x86}-o./lib/x32/xlsxwriter
 
 -w3 -es2
 
 -iinclude
 -i./third_party/zlib
+{x86_64}-L./third_party/minizip/lib/x64
+{x86}-L./third_party/minizip/lib/x64
 -lminizip
 
 
@@ -33,6 +35,7 @@ src/vml.c
 src/workbook.c
 src/worksheet.c
 src/xmlwriter.c
+{allbcc}bcc_comp.c
 
 -cflag=-DUSE_NO_MD5
 -cflag=-DUSE_STANDARD_TMPFILE

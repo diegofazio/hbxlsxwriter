@@ -1,8 +1,8 @@
 -hblib
 -rebuild
 
-{msvc64}-o./lib/x64/${hb_name}
-{msvc}-o./lib/x32/${hb_name}
+{x86_64}-o./lib/x64/${hb_name}
+{x86}-o./lib/x32/${hb_name}
 
 -w3 -es2
 

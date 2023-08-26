@@ -3,8 +3,8 @@
 -hblib
 -rebuild 
 
-{msvc64}-o./lib/x64/minizip
-{msvc}-o./lib/x32/minizip
+{x86_64}-o./lib/x64/minizip
+{x86}-o./lib/x32/minizip
 
 -hbx=
 
@@ -44,3 +44,5 @@ iowin32.c
 # MAP    contrib/minizip/unzip.h unzip.h
 # MAP    contrib/minizip/zip.c   zip.c
 # MAP    contrib/minizip/zip.h   zip.h
+
+{allbcc}-cflag=-DUSE_FILE32API
