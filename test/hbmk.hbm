@@ -1,8 +1,8 @@
-hbxlsxwriter.hbc
+../hbxlsxwriter.hbc
 -w3 -es2
 -I../ 
 {x86_64}-L../libxlsxwriter/lib/x64
-{x86}-L../libxlsxwriter/lib/x64
+{x86}-L../libxlsxwriter/lib/x32
 {x86_64}-L../lib/x64
 {x86}-L../lib/x32
 {x86_64}-L../libxlsxwriter/third_party/minizip/lib/x64
