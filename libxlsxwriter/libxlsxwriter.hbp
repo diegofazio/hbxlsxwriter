@@ -9,7 +9,7 @@
 -iinclude
 -i./third_party/zlib
 {x86_64}-L./third_party/minizip/lib/x64
-{x86}-L./third_party/minizip/lib/x64
+{x86}-L./third_party/minizip/lib/x32
 -lminizip
 
 
