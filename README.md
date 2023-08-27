@@ -1,4 +1,4 @@
-## Xlsx creation 100% from Harbour without ANY depends( dll or closed libs )<br> All from the sources!
+## .xlsx file creation from Harbour 100% free of  depencies ( dll or closed libs ) <br> All from the sources!
 ### Sources
 
 [libxlsxwriter](https://github.com/jmcnamara/libxlsxwriter)  <-- downloaded library( 1.1.5 December 30 2022 ) - Note:minor changes<br>
