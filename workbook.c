@@ -21,12 +21,118 @@
 #include "hbapierr.h"
 #include "hbapiitm.h"
 
+static lxw_doc_properties my_doc_properties;
 
 /*****************************************************************************
  *
  * Private functions.
  *
  ****************************************************************************/
+
+/* Init a lxw_doc_properties
+ *
+ *
+ */
+void init_lxw_doc_properties()
+{
+   my_doc_properties.title = NULL; // 1
+   my_doc_properties.subject = NULL; // 2
+   my_doc_properties.author = NULL;  //3
+   my_doc_properties.manager = NULL;  //4
+   my_doc_properties.company = NULL;  //5
+   my_doc_properties.category = NULL;  //6
+   my_doc_properties.keywords = NULL;  //7
+   my_doc_properties.comments = NULL;  //8
+   my_doc_properties.status = NULL;  //9
+   my_doc_properties.hyperlink_base = NULL;  //10
+   my_doc_properties.created = 0;  //11 - don't know the format
+}
+
+void free_lxw_doc_properties()
+{
+	 if ( my_doc_properties.title ) hb_xfree( my_doc_properties.title );
+         if ( my_doc_properties.subject ) hb_xfree( my_doc_properties.subject );
+         if ( my_doc_properties.author ) hb_xfree( my_doc_properties.author );
+         if ( my_doc_properties.manager ) hb_xfree( my_doc_properties.manager );
+         if ( my_doc_properties.company ) hb_xfree( my_doc_properties.company );
+         if ( my_doc_properties.category ) hb_xfree( my_doc_properties.category );
+         if ( my_doc_properties.keywords ) hb_xfree( my_doc_properties.keywords );
+         if ( my_doc_properties.comments ) hb_xfree( my_doc_properties.comments );
+         if ( my_doc_properties.status ) hb_xfree( my_doc_properties.status );
+         if ( my_doc_properties.hyperlink_base ) hb_xfree( my_doc_properties.hyperlink_base );
+}
+
+HB_FUNC( SET_DOC_PROPERTY )
+{
+   int idx_prop = hb_parni( 1 );
+   int nLen = hb_parclen(2);
+   const char *idx_value = hb_parcx(2);
+
+   // printf( "SET_DOC_PROPERTY( %d, %s )\n", idx_prop, idx_value );
+   switch( idx_prop )
+   { 
+      case 1: 
+	 if ( my_doc_properties.title ) hb_xfree( my_doc_properties.title );
+         my_doc_properties.title = ( char *)  hb_xalloc( ( nLen + 1 ) * sizeof( char ) );
+         strncpy( my_doc_properties.title, idx_value, nLen );
+         my_doc_properties.title[nLen] = 0;
+	 break;
+      case 2: 
+         if ( my_doc_properties.subject ) hb_xfree( my_doc_properties.subject );
+         my_doc_properties.subject = ( char *)  hb_xalloc( ( nLen + 1 ) * sizeof( char ) );
+         strncpy( my_doc_properties.subject, idx_value, nLen );
+         my_doc_properties.subject[nLen] = 0;
+	 break;
+      case 3: 
+         if ( my_doc_properties.author ) hb_xfree( my_doc_properties.author );
+         my_doc_properties.author = ( char *)  hb_xalloc( ( nLen + 1 ) * sizeof( char ) );
+         strncpy( my_doc_properties.author, idx_value, nLen );
+         my_doc_properties.author[nLen] = 0;
+	 break;
+      case 4: 
+         if ( my_doc_properties.manager ) hb_xfree( my_doc_properties.manager );
+         my_doc_properties.manager = ( char *)  hb_xalloc( ( nLen + 1 ) * sizeof( char ) );
+         strncpy( my_doc_properties.manager, idx_value, nLen );
+         my_doc_properties.manager[nLen] = 0;
+	 break;
+      case 5: 
+         if ( my_doc_properties.company ) hb_xfree( my_doc_properties.company );
+         my_doc_properties.company = ( char *)  hb_xalloc( ( nLen + 1 ) * sizeof( char ) );
+         strncpy( my_doc_properties.company, idx_value, nLen );
+         my_doc_properties.company[nLen] = 0;
+	 break;
+      case 6: 
+         if ( my_doc_properties.category ) hb_xfree( my_doc_properties.category );
+         my_doc_properties.category = ( char *)  hb_xalloc( ( nLen + 1 ) * sizeof( char ) );
+         strncpy( my_doc_properties.category, idx_value, nLen );
+         my_doc_properties.category[nLen] = 0;
+	 break;
+      case 7: 
+         if ( my_doc_properties.keywords ) hb_xfree( my_doc_properties.keywords );
+         my_doc_properties.keywords = ( char *)  hb_xalloc( ( nLen + 1 ) * sizeof( char ) );
+         strncpy( my_doc_properties.keywords, idx_value, nLen );
+         my_doc_properties.keywords[nLen] = 0;
+	 break;
+      case 8: 
+         if ( my_doc_properties.comments ) hb_xfree( my_doc_properties.comments );
+         my_doc_properties.comments = ( char *)  hb_xalloc( ( nLen + 1 ) * sizeof( char ) );
+         strncpy( my_doc_properties.comments, idx_value, nLen );
+         my_doc_properties.comments[nLen] = 0;
+	 break;
+      case 9: 
+         if ( my_doc_properties.status ) hb_xfree( my_doc_properties.status );
+         my_doc_properties.status = ( char *)  hb_xalloc( ( nLen + 1 ) * sizeof( char ) );
+         strncpy( my_doc_properties.status, idx_value, nLen );
+         my_doc_properties.status[nLen] = 0;
+	 break;
+      case 10: 
+         if ( my_doc_properties.hyperlink_base ) hb_xfree( my_doc_properties.hyperlink_base );
+         my_doc_properties.hyperlink_base = ( char *)  hb_xalloc( ( nLen + 1 ) * sizeof( char ) );
+         strncpy( my_doc_properties.hyperlink_base, idx_value, nLen );
+         my_doc_properties.hyperlink_base[nLen] = 0;
+	 break;
+   }
+}
 
 /*
  * Free a workbook object.
@@ -40,6 +146,8 @@ HB_FUNC( LXW_WORKBOOK_FREE )
    lxw_workbook *workbook = hb_parptr( 1 ) ;
 
    lxw_workbook_free( workbook ); 
+
+   free_lxw_doc_properties();
 }
 
 
@@ -109,6 +217,8 @@ HB_FUNC( WORKBOOK_NEW )
    const char *filename = hb_parcx( 1 ) ;
 
    hb_retptr( workbook_new( filename ) ); 
+
+   init_lxw_doc_properties();
 }
 
 /* Deprecated function name for backwards compatibility. */
@@ -120,6 +230,7 @@ HB_FUNC( NEW_WORKBOOK )
 {
    const char *filename = hb_parcx( 1 ) ;
    hb_retptr( workbook_new_opt(filename, NULL) );
+   init_lxw_doc_properties();
 }
 
 
@@ -142,6 +253,7 @@ HB_FUNC( WORKBOOK_NEW_OPT )
    {
       workbook_new_opt(filename, options);
    }
+   init_lxw_doc_properties();
 }
 
 
@@ -274,7 +386,8 @@ HB_FUNC( WORKBOOK_SET_PROPERTIES )
    lxw_workbook *self = hb_parptr( 1 ) ;
    lxw_doc_properties *user_props = hb_parptr(2 ) ;
 
-   hb_retni( workbook_set_properties( self, user_props ) ); 
+   hb_retni( workbook_set_properties( self, &my_doc_properties ) ); 
+   // hb_retni( workbook_set_properties( self, user_props ) ); 
 }
 
 

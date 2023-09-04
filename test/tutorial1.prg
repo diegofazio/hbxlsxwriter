@@ -30,6 +30,18 @@ function main()
     /* Create a workbook and add a worksheet. */
     workbook  = workbook_new("tutorial01.xlsx")
     worksheet = workbook_add_worksheet(workbook, NIL)
+    // Properties should be added as #defines to hbxlsxwriter.ch
+    set_doc_property( 1, "This is the title" )
+    set_doc_property( 1, "This is another title" )
+    set_doc_property( 2, "This is the subject" )
+    set_doc_property( 3, "This is the author" )
+    set_doc_property( 4, "This is the manager" )
+    set_doc_property( 5, "This is the company" )
+    set_doc_property( 6, "This is the category" )
+    set_doc_property( 7, "This is the keywords" )
+    set_doc_property( 8, "This is the comments" )
+    set_doc_property( 9, "This is the status" )
+    set_doc_property(10, "This is the hyperlink" )
 
     col := 0
 
@@ -42,6 +54,8 @@ function main()
     /* Write a total using a formula. */
     worksheet_write_string (worksheet, row, col,     "Total",       NIL)
     worksheet_write_formula(worksheet, row, col + 1, "=SUM(B1:B4)", NIL)
+
+    workbook_set_properties( workbook, NIL )
 
     /* Save the workbook and free any allocated memory. */
     return workbook_close(workbook)
