@@ -706,7 +706,7 @@ HB_FUNC( WORKSHEET_WRITE_RICH_STRING )
       HB_SIZE nLen = hb_arrayLen( pArray );
       lxw_rich_string_tuple **rich_strings = ( lxw_rich_string_tuple **) 
                                                hb_xalloc( sizeof( lxw_rich_string_tuple ) 
-                                                          * nLen );
+                                                          * ( nLen+1 ) );
 
       HB_SIZE nPos = 0;
       while( ++nPos <= nLen )
@@ -745,6 +745,7 @@ HB_FUNC( WORKSHEET_WRITE_RICH_STRING )
 	    return;
          }
       }
+      rich_strings[ nPos-1 ] = NULL;
       if ( nLen>0 ){
 
          hb_retni( worksheet_write_rich_string( self, row_num, col_num, rich_strings, format ) ); 

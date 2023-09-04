@@ -2,6 +2,7 @@
 
 -hblib
 -rebuild 
+-depincpathlocal=zlib:../zlib
 
 {x86_64}-o./lib/x64/minizip
 {x86}-o./lib/x32/minizip
