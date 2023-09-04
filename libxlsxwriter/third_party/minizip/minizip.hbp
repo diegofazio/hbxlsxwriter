@@ -2,7 +2,6 @@
 
 -hblib
 -rebuild 
--depincpathlocal=zlib:../zlib
 
 {x86_64}-o./lib/x64/minizip
 {x86}-o./lib/x32/minizip
@@ -30,7 +29,8 @@ iowin32.c
 -depincpath=zlib:/usr/include
 -depincpath=zlib:/usr/local/include
 -depincpath=zlib:/boot/develop/headers/3rdparty
--depincpathlocal=zlib:../../../../src/3rd/zlib
+-depincpathlocal=zlib:${HB_ADDONS}/../src/3rd/zlib
+-depincpathlocal=zlib:../zlib
 
 # ORIGIN http://zlib.net/
 # VER    1.2.8
