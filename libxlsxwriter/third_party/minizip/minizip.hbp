@@ -29,7 +29,7 @@ iowin32.c
 -depincpath=zlib:/usr/include
 -depincpath=zlib:/usr/local/include
 -depincpath=zlib:/boot/develop/headers/3rdparty
--depincpathlocal=zlib:../../../../src/3rd/zlib
+-depincpathlocal=zlib:${HB_ADDONS}/../src/3rd/zlib
 -depincpathlocal=zlib:../zlib
 
 # ORIGIN http://zlib.net/
