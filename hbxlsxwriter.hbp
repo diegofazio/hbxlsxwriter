@@ -1,8 +1,12 @@
 -hblib
 -rebuild
 
-{x86_64}-o./lib/x64/${hb_name}
-{x86}-o./lib/x32/${hb_name}
+{msvc64}-o./lib/x64/msvc64/${hb_name}
+{msvc}-o./lib/x32/msvc/${hb_name}
+{bcc64}-o./lib/x64/bcc64/${hb_name}
+{bcc}-o./lib/x32/bcc/${hb_name}
+{mingw64}-o./lib/x64/mingw64/${hb_name}
+{mingw}-o./lib/x32/mingw/${hb_name}
 
 -w3 -es2
 
@@ -13,23 +17,71 @@
 -depincpath=xlsxwriter:libxlsxwriter/include
 -depincpath=xlsxwriter:/usr/include
 -depincpath=xlsxwriter:/libxlsxwriter/include
+-depkeyhead=zlib:zlib.h
+-depcontrol=zlib:local{HB_BUILD_3RDEXT='no'}
+-depcontrol=zlib:${HB_WITH_ZLIB}
+-depincpath=zlib:/usr/include
+-depincpath=zlib:/usr/local/include
+-depincpath=zlib:/boot/develop/headers/3rdparty
+-depincpathlocal=zlib:${HB_ADDONS}/../src/3rd/zlib
+-depincpathlocal=zlib:../zlib
+-depincpathlocal=zlib:libxlsxwriter/third_party/zlib
 
 ${hb_name}.hbx
 
-app.c
-workbook.c
-worksheet.c
-format.c
-chart.c
-chartsheet.c
-content_types.c
-core.c
-custom.c 
-drawing.c
-relationships.c
-shared_strings.c
-styles.c
-utility.c
-hb_misc.c
+src/hb_app.c
+src/hb_workbook.c
+src/hb_worksheet.c
+src/hb_format.c
+src/hb_chart.c
+src/hb_chartsheet.c
+src/hb_content_types.c
+src/hb_core.c
+src/hb_custom.c 
+src/hb_drawing.c
+src/hb_relationships.c
+src/hb_shared_strings.c
+src/hb_styles.c
+src/hb_utility.c
+src/hb_misc.c
+src/hb_others.prg
 
-hb_others.prg
+-warn=low
+-cpp=no
+-pic
+
+# for f*64() functions
+-c=gnu90
+
+libxlsxwriter\third_party\minizip\ioapi.c
+libxlsxwriter\third_party\minizip\zip.c
+libxlsxwriter\third_party\minizip\unzip.c
+libxlsxwriter\third_party\minizip\iowin32.c
+
+libxlsxwriter/src/app.c
+libxlsxwriter/src/chart.c
+libxlsxwriter/src/chartsheet.c
+libxlsxwriter/src/comment.c
+libxlsxwriter/src/content_types.c
+libxlsxwriter/src/core.c
+libxlsxwriter/src/custom.c 
+libxlsxwriter/src/drawing.c
+libxlsxwriter/src/format.c
+libxlsxwriter/src/hash_table.c
+libxlsxwriter/src/metadata.c
+libxlsxwriter/src/packager.c
+libxlsxwriter/src/relationships.c
+libxlsxwriter/src/shared_strings.c
+libxlsxwriter/src/styles.c
+libxlsxwriter/src/table.c
+libxlsxwriter/src/theme.c
+libxlsxwriter/src/utility.c
+libxlsxwriter/src/vml.c
+libxlsxwriter/src/workbook.c
+libxlsxwriter/src/worksheet.c
+libxlsxwriter/src/xmlwriter.c
+{allbcc}libxlsxwriter/bcc_comp.c
+
+-cflag=-DUSE_NO_MD5
+-cflag=-DUSE_STANDARD_TMPFILE
+{allbcc}-cflag=-DUSE_FILE32API

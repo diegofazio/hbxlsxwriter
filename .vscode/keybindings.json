@@ -1,5 +1,0 @@
-[{"key": "Shift+alt+f",
-    "command": "workbench.action.tasks.runTask",
-    "when": "resourceExtname == .prg || resourceExtname == .ch ",   
-     "args": "hbformat"}    
-]
