@@ -2,3 +2,7 @@
 .vscode
 *.exe
 *.xlsx
+*~
+*.a
+*.lib
+*.swp
