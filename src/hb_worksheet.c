@@ -287,7 +287,14 @@ HB_FUNC( _VALIDATION_LIST_TO_CSV )
  *    uint16_t image_ref_id, uint16_t drawing_id,
  *    lxw_image_options *image_data)
  *
+ *    Current definition:
+ * void lxw_worksheet_prepare_image(lxw_worksheet *worksheet,
+ *      uint32_t image_ref_id, uint32_t drawing_id,
+ *      lxw_object_properties *object_props);
+ *    
+ * Disabled as it may break
  */
+/*
 HB_FUNC( LXW_WORKSHEET_PREPARE_IMAGE )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
@@ -301,6 +308,7 @@ HB_FUNC( LXW_WORKSHEET_PREPARE_IMAGE )
    lxw_worksheet_prepare_image( self, image_ref_id, drawing_id, image_data ); 
    hb_xfree( image_data );
 }
+*/
 
 
 /*
@@ -313,7 +321,9 @@ HB_FUNC( LXW_WORKSHEET_PREPARE_IMAGE )
  *    lxw_image_options *image_data,
  *    uint8_t is_chartsheet)
  *
+ * As per above _prepare_image, the 4th parameter is different
  */
+/*
 HB_FUNC( LXW_WORKSHEET_PREPARE_CHART )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
@@ -328,7 +338,7 @@ HB_FUNC( LXW_WORKSHEET_PREPARE_CHART )
    lxw_worksheet_prepare_chart( self, chart_ref_id, drawing_id, image_data, is_chartsheet) ; 
    hb_xfree( image_data );
 }
-
+*/
 
 
 /*****************************************************************************
@@ -1817,7 +1827,9 @@ HB_FUNC( WORKSHEET_INSERT_IMAGE_BUFFER )
  *       lxw_row_t row_num, lxw_col_t col_num,
  *       lxw_chart *chart, lxw_image_options *user_options)
  *
+ * Parameters is not lxw_image_options
  */
+/*
 HB_FUNC( WORKSHEET_INSERT_CHART_OPT )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
@@ -1835,6 +1847,7 @@ HB_FUNC( WORKSHEET_INSERT_CHART_OPT )
       hb_xfree( user_options );
    }
 }
+*/
 
 
 
