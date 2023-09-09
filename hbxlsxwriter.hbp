@@ -1,12 +1,7 @@
 -hblib
 -rebuild
 
-{msvc64}-o./lib/x64/msvc64/${hb_name}
-{msvc}-o./lib/x32/msvc/${hb_name}
-{bcc64}-o./lib/x64/bcc64/${hb_name}
-{bcc}-o./lib/x32/bcc/${hb_name}
-{mingw64}-o./lib/x64/mingw64/${hb_name}
-{mingw}-o./lib/x32/mingw/${hb_name}
+-olib/${hb_plat}/${hb_comp}/${hb_cpu}/${hb_name}
 
 -w3 -es2
 
