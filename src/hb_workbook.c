@@ -260,6 +260,72 @@ HB_FUNC( WORKBOOK_DEFINE_NAME )
 }
 
 
+/*
+ *  Code borrowed and adapted
+ *
+ *  lxw takes care of copying and safely store the strings
+ */
+lxw_doc_properties * hash2properties( PHB_ITEM pHash )
+{
+   if( HB_IS_HASH( pHash ) )
+   {
+      lxw_doc_properties *properties = (lxw_doc_properties *) hb_xalloc( sizeof(lxw_doc_properties) ); 
+ 
+      memset( properties, 0, sizeof( lxw_doc_properties ) );
+
+      HB_SIZE nLen = hb_hashLen( pHash ), nPos = 0;
+
+      while( ++nPos <= nLen )
+      {
+         PHB_ITEM pKey = hb_hashGetKeyAt( pHash, nPos );
+         PHB_ITEM pValue = hb_hashGetValueAt( pHash, nPos );
+         if( pKey && pValue )
+         {
+            char *key = (char *)hb_itemGetC( pKey );
+
+            if( HB_IS_STRING( pValue ) )
+            {
+                char *value = (char *) hb_itemGetC( pValue );
+
+                if( hb_stricmp( key, "title" ) == 0 ){
+                   properties->title = value;
+                }
+                else if( hb_stricmp( key, "subject" ) == 0 ){
+                   properties->subject = value;
+                }
+                else if( hb_stricmp( key, "author" ) == 0 ){
+                   properties->author = value;
+                }
+                else if( hb_stricmp( key, "manager" ) == 0 ){
+                   properties->manager = value;
+                }
+                else if( hb_stricmp( key, "company" ) == 0 ){
+                   properties->company = value;
+                }
+                else if( hb_stricmp( key, "category" ) == 0 ){
+                   properties->category = value;
+                }
+                else if( hb_stricmp( key, "keywords" ) == 0 ){
+                   properties->keywords = value;
+                }
+                else if( hb_stricmp( key, "comments" ) == 0 ){
+                   properties->comments = value;
+                }
+                else if( hb_stricmp( key, "status" ) == 0 ){
+                   properties->status = value;
+                }
+                else if( hb_stricmp( key, "hyperlink_base" ) == 0 ){
+                   properties->hyperlink_base = value;
+                }
+            }
+	 }
+      }
+      if( properties ){
+         return properties; 
+      }
+   }
+   return 0;
+}
 
 
 /*
@@ -272,9 +338,13 @@ HB_FUNC( WORKBOOK_DEFINE_NAME )
 HB_FUNC( WORKBOOK_SET_PROPERTIES )
 { 
    lxw_workbook *self = hb_parptr( 1 ) ;
-   lxw_doc_properties *user_props = hb_parptr(2 ) ;
+   PHB_ITEM pHash = hb_param( 2, HB_IT_HASH );
+
+   lxw_doc_properties *user_props = hash2properties( pHash ) ;
 
    hb_retni( workbook_set_properties( self, user_props ) ); 
+
+   hb_xfree( user_props );
 }
 
 
