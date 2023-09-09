@@ -31,7 +31,7 @@ PROCEDURE Main()
    worksheet_insert_image( worksheet, 1, 2, "hb_logo.png" )
 
    /* Insert an image with options. */
-   options := {"x_scale" => .5, "y_scale" => .5 }
+   options := {"x_scale" => .5, "y_scale" => .5, "description" => "image description", "tip" => "mouseover tip" }
    worksheet_insert_image_opt( worksheet, CELL("B15"), "hb_logo.png", options )
 
    options := {"x_offset"=> 10 , "y_offset" => 5 }
