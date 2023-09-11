@@ -5,6 +5,6 @@
 [hbxlsxwriter](https://github.com/riztan/hbxlsxwriter)  <-- **riztan** libxlsxwriter Wrapper( minor changes ). 
 ***
 ### Note:
-Binaries for msvc/mingw/bcc are included in ./lib for testing.<br> 
+Binaries built in msvc(2019)/mingw(10.3)/bcc64(7.1) are included in ./lib for testing.<br> 
 Tests Samples -> /test<br>
 New minizip version is used. 
