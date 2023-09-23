@@ -16,8 +16,55 @@
 #include "xlsxwriter/utility.h"
 
 #include "hbapi.h"
+#include "hbapierr.h"
+#include "hbapiitm.h"
 
 
+static HB_GARBAGE_FUNC( XLSXFormat_release )
+{
+	printf( "Chiamato hb_XLSXFormat_release 2\n" );
+   void ** ph = ( void ** ) Cargo;
+
+   /* Check if pointer is not NULL to avoid multiple freeing */
+   if( ph && *ph )
+   {
+      /* Destroy the object */
+	printf( "Chiamato hb_XLSXFormat_release 3a\n" );
+      lxw_format_free( ( lxw_format * ) *ph );
+	printf( "Chiamato hb_XLSXFormat_release 3b\n" );
+
+      /* set pointer to NULL to avoid multiple freeing */
+      *ph = NULL;
+   }
+}
+
+static const HB_GC_FUNCS s_gcXLSXFormatFuncs =
+{
+   XLSXFormat_release,
+   hb_gcDummyMark
+};
+
+void hb_XLSXFormat_ret( lxw_format * p )
+{
+   fprintf( stderr,"Chiamato hb_XLSXFormat_ret\n" );
+   if( p )
+   {
+      void ** ph = ( void ** ) hb_gcAllocate( sizeof( lxw_format * ), &s_gcXLSXFormatFuncs );
+
+      *ph = p;
+
+      hb_retptrGC( ph );
+   }
+   else
+      hb_retptr( NULL );
+}
+
+lxw_format * hb_XLSXFormat_par( int iParam )
+{
+   void ** ph = ( void ** ) hb_parptrGC( &s_gcXLSXFormatFuncs, iParam );
+
+   return ph ? ( lxw_format * ) *ph : NULL;
+}
 
 
 /*
@@ -29,8 +76,10 @@
  */
 HB_FUNC( LXW_FORMAT_NEW )
 {
+	printf( "Chiamato lxw_format_new\n" );
    lxw_format *format = lxw_format_new();
-   hb_retptr( format ); 
+   hb_XLSXFormat_ret( format );
+   // hb_retptr( format ); 
 }
 
 
@@ -215,9 +264,16 @@ HB_FUNC( FORMAT_SET_FONT_COLOR )
  */
 HB_FUNC( FORMAT_SET_BOLD )
 { 
-   lxw_format *self = hb_parptr( 1 ) ;
+   printf(" set bold\n" );
 
-   self->bold = LXW_TRUE;
+   lxw_format * self = hb_XLSXFormat_par( 1 ); // hb_parptr( 1 ) ;
+
+   if ( self ) {
+       printf( "bold settato\n" );
+       self->bold = LXW_TRUE;
+   }
+   else
+       printf( "bold non settato\n" );
 }
 
 
@@ -336,7 +392,7 @@ HB_FUNC( FORMAT_SET_FONT_SHADOW )
  */
 HB_FUNC( FORMAT_SET_NUM_FORMAT )
 { 
-   lxw_format *self = hb_parptr( 1 ) ;
+   lxw_format * self = hb_XLSXFormat_par( 1 ) ; // hb_parptr( 1 ) ;
    const char *num_format = hb_parcx( 2 ) ;
 
    format_set_num_format( self, num_format ); 

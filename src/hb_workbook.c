@@ -204,7 +204,7 @@ HB_FUNC( WORKBOOK_ADD_CHART )
    hb_retptr( workbook_add_chart( self, type ) ); 
 }
 
-
+void hb_XLSXFormat_ret( lxw_format * p ) ;
 
 
 /*
@@ -218,7 +218,8 @@ HB_FUNC( WORKBOOK_ADD_FORMAT )
 { 
    lxw_workbook *self = hb_parptr( 1 ) ;
 
-   hb_retptr( workbook_add_format( self ) ); 
+   hb_XLSXFormat_ret( workbook_add_format( self ) ); 
+   // hb_retptr( workbook_add_format( self ) ); 
 }
 
 

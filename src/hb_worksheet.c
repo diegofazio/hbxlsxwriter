@@ -35,6 +35,7 @@
 #define LXW_VALIDATION_MAX_STRING_LENGTH 255
 */
 
+lxw_format * hb_XLSXFormat_par( int iParam );
 
 /*
  *  
@@ -421,7 +422,7 @@ HB_FUNC( WORKSHEET_WRITE_NUMBER )
    lxw_row_t row_num = hb_parni( 2 ) ;
    lxw_col_t col_num = hb_parni( 3 ) ;
    double value = hb_parnd(4 ) ;
-   lxw_format *format = hb_parptr(5 ) ;
+   lxw_format *format = hb_XLSXFormat_par(5 ) ;
 
    hb_retni( worksheet_write_number( self, row_num, col_num, value, format ) ); 
 }
@@ -444,7 +445,7 @@ HB_FUNC( WORKSHEET_WRITE_STRING )
    lxw_row_t row_num   = hb_parni( 2 ) ;
    lxw_col_t col_num   = hb_parni( 3 ) ;
    const char *string  = hb_parcx( 4 ) ;
-   lxw_format *format  = hb_parptr(5 ) ;
+   lxw_format *format  = hb_XLSXFormat_par( 5 ) ;
 
    hb_retni( worksheet_write_string( self, row_num, col_num, string, format) ); 
 }
@@ -468,7 +469,7 @@ HB_FUNC( WORKSHEET_WRITE_FORMULA_NUM )
    lxw_row_t row_num = hb_parni( 2 ) ;
    lxw_col_t col_num = hb_parni( 3 ) ;
    const char *formula = hb_parcx( 4 ) ;
-   lxw_format *format = hb_parptr(5 ) ;
+   lxw_format *format = hb_XLSXFormat_par( 5 ) ;
    double result = hb_parnd(6 ) ;
 
    hb_retni( worksheet_write_formula_num( self, row_num, col_num, formula, format, result ) ); 
@@ -492,7 +493,7 @@ HB_FUNC( WORKSHEET_WRITE_FORMULA )
    lxw_row_t row_num = hb_parni( 2 ) ;
    lxw_col_t col_num = hb_parni( 3 ) ;
    const char *formula = hb_parcx( 4 ) ;
-   lxw_format *format = hb_parptr( 5 ) ;
+   lxw_format *format = hb_XLSXFormat_par( 5 ) ;
 
    hb_retni( worksheet_write_formula( self, row_num, col_num, formula, format ) ); 
 }
@@ -520,7 +521,7 @@ HB_FUNC( WORKSHEET_WRITE_ARRAY_FORMULA_NUM )
    lxw_row_t last_row = hb_parni( 4 ) ;
    lxw_col_t last_col = hb_parni( 5 ) ;
    const char *formula = hb_parcx( 6 ) ;
-   lxw_format *format = hb_parptr(7 ) ;
+   lxw_format *format = hb_XLSXFormat_par(7 ) ;
    double result = hb_parnd(8 ) ;
 
    hb_retni( worksheet_write_array_formula_num( self, first_row, first_col, last_row, last_col, formula, format, result ) ); 
@@ -546,7 +547,7 @@ HB_FUNC( WORKSHEET_WRITE_ARRAY_FORMULA )
    lxw_row_t last_row = hb_parni( 4 ) ;
    lxw_col_t last_col = hb_parni( 5 ) ;
    const char *formula = hb_parcx( 6 ) ;
-   lxw_format *format = hb_parptr(7 ) ;
+   lxw_format *format = hb_XLSXFormat_par(7 ) ;
 
    hb_retni( worksheet_write_array_formula( self, first_row, first_col, last_row, last_col, formula, format ) ); 
 }
@@ -567,7 +568,7 @@ HB_FUNC( WORKSHEET_WRITE_BLANK )
    lxw_worksheet *self = hb_parptr( 1 ) ;
    lxw_row_t row_num = hb_parni( 2 ) ;
    lxw_col_t col_num = hb_parni( 3 ) ;
-   lxw_format *format = hb_parptr(4 ) ;
+   lxw_format *format = hb_XLSXFormat_par(4 ) ;
 
    hb_retni( worksheet_write_blank( self, row_num, col_num, format ) ); 
 }
@@ -588,7 +589,7 @@ HB_FUNC( WORKSHEET_WRITE_BOOLEAN )
    lxw_row_t row_num = hb_parni( 2 ) ;
    lxw_col_t col_num = hb_parni( 3 ) ;
    int value = hb_parni( 4 ) ;
-   lxw_format *format = hb_parptr(5 ) ;
+   lxw_format *format = hb_XLSXFormat_par(5 ) ;
 
    hb_retni( worksheet_write_boolean( self, row_num, col_num, value, format ) ); 
 }
@@ -632,7 +633,7 @@ HB_FUNC( WORKSHEET_WRITE_DATETIME )
        datetime.sec = iSec;
    }
 
-   lxw_format *format = hb_parptr(5 ) ;
+   lxw_format *format = hb_XLSXFormat_par(5 ) ;
 
    hb_retni( worksheet_write_datetime( self, row_num, col_num, &datetime, format ) ); 
 }
@@ -656,7 +657,7 @@ HB_FUNC( WORKSHEET_WRITE_URL_OPT )
    lxw_row_t row_num = hb_parni( 2 ) ;
    lxw_col_t col_num = hb_parni( 3 ) ;
    const char *url = hb_parcx( 4 ) ;
-   lxw_format *format = hb_parptr(5 ) ;
+   lxw_format *format = hb_XLSXFormat_par(5 ) ;
    const char *string = hb_parcx( 6 ) ;
    const char *tooltip = hb_parcx( 7 ) ;
 
@@ -680,7 +681,7 @@ HB_FUNC( WORKSHEET_WRITE_URL )
    lxw_row_t row_num = hb_parni( 2 ) ;
    lxw_col_t col_num = hb_parni( 3 ) ;
    const char *url = hb_parcx( 4 ) ;
-   lxw_format *format = hb_parptr(5 ) ;
+   lxw_format *format = hb_XLSXFormat_par(5 ) ;
 
    hb_retni( worksheet_write_url( self, row_num, col_num, url, format ) ); 
 }
@@ -709,7 +710,7 @@ HB_FUNC( WORKSHEET_WRITE_RICH_STRING )
    lxw_row_t row_num   = hb_parni( 2 ) ;
    lxw_col_t col_num   = hb_parni( 3 ) ;
    PHB_ITEM pArray     = hb_param( 4, HB_IT_ARRAY );
-   lxw_format *format  = hb_parptr( 5 );
+   lxw_format *format  = hb_XLSXFormat_par( 5 );
 
    if( pArray && HB_IS_ARRAY( pArray ) && hb_arrayLen( pArray ) > 0 )
    {
@@ -738,7 +739,7 @@ HB_FUNC( WORKSHEET_WRITE_RICH_STRING )
 
                char *key = (char *)hb_itemGetC( pKey );
 
-               if( hb_stricmp( key, "format" ) == 0 ){
+               if( hb_stricmp( key, "format" ) == 0 ){  // FP: check how to retrieve
                   tuple->format = (lxw_format *) hb_itemGetPtr( pValue ) ;
 
                }
@@ -802,7 +803,7 @@ HB_FUNC( WORKSHEET_SET_COLUMN_OPT )
    lxw_col_t firstcol = hb_parni( 2 ) ;
    lxw_col_t lastcol = hb_parni( 3 ) ;
    double width = hb_parnd( 4 ) ;
-   lxw_format *format = hb_parptr(5 ) ;
+   lxw_format *format = hb_XLSXFormat_par(5); // hb_parptr(5 ) ;
    lxw_row_col_options *user_options = hb_parptr(6 ) ;
 
    hb_retni( worksheet_set_column_opt( self, firstcol, lastcol, width, format, user_options) ); 
@@ -826,7 +827,7 @@ HB_FUNC( WORKSHEET_SET_COLUMN )
    lxw_col_t firstcol = hb_parni( 2 ) ;
    lxw_col_t lastcol = hb_parni( 3 ) ;
    double width = hb_parnd( 4 ) ;
-   lxw_format *format = hb_parptr(5 ) ;
+   lxw_format *format = hb_XLSXFormat_par(5 ) ;
 
    hb_retni( worksheet_set_column( self, firstcol, lastcol, width, format) ); 
 }
@@ -848,7 +849,7 @@ HB_FUNC( WORKSHEET_SET_ROW_OPT )
    lxw_worksheet *self = hb_parptr( 1 ) ;
    lxw_row_t row_num = hb_parni( 2 ) ;
    double height = hb_parnd( 3 ) ;
-   lxw_format *format = hb_parptr(4 ) ;
+   lxw_format *format = hb_XLSXFormat_par(4 ) ;
    lxw_row_col_options *user_options = hb_parptr(5 ) ;
 
    hb_retni( worksheet_set_row_opt( self, row_num, height, format, user_options) ); 
@@ -870,7 +871,7 @@ HB_FUNC( WORKSHEET_SET_ROW )
    lxw_worksheet *self = hb_parptr( 1 ) ;
    lxw_row_t row_num = hb_parni( 2 ) ;
    double height = hb_parnd( 3 ) ;
-   lxw_format *format = hb_parptr(4 ) ;
+   lxw_format *format = hb_XLSXFormat_par(4 ) ;
 
    hb_retni( worksheet_set_row( self, row_num, height, format) ); 
 }
@@ -896,7 +897,7 @@ HB_FUNC( WORKSHEET_MERGE_RANGE )
    lxw_row_t last_row = hb_parni( 4 ) ;
    lxw_col_t last_col = hb_parni( 5 ) ;
    const char *string = hb_parcx( 6 ) ;
-   lxw_format *format = hb_parptr(7 ) ;
+   lxw_format *format = hb_XLSXFormat_par(7 ) ;
 
    hb_retni( worksheet_merge_range( self, first_row, first_col, last_row, last_col, string, format) ); 
 }
