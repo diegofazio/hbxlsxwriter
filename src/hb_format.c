@@ -22,16 +22,16 @@
 
 static HB_GARBAGE_FUNC( XLSXFormat_release )
 {
-	printf( "Chiamato hb_XLSXFormat_release 2\n" );
+	// printf( "Chiamato hb_XLSXFormat_release 2\n" );
    void ** ph = ( void ** ) Cargo;
 
    /* Check if pointer is not NULL to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-	printf( "Chiamato hb_XLSXFormat_release 3a\n" );
+	 // printf( "Chiamato hb_XLSXFormat_release 3a\n" );
       lxw_format_free( ( lxw_format * ) *ph );
-	printf( "Chiamato hb_XLSXFormat_release 3b\n" );
+	 // printf( "Chiamato hb_XLSXFormat_release 3b\n" );
 
       /* set pointer to NULL to avoid multiple freeing */
       *ph = NULL;
@@ -46,7 +46,7 @@ static const HB_GC_FUNCS s_gcXLSXFormatFuncs =
 
 void hb_XLSXFormat_ret( lxw_format * p )
 {
-   fprintf( stderr,"Chiamato hb_XLSXFormat_ret\n" );
+    // fprintf( stderr,"Chiamato hb_XLSXFormat_ret\n" );
    if( p )
    {
       void ** ph = ( void ** ) hb_gcAllocate( sizeof( lxw_format * ), &s_gcXLSXFormatFuncs );
@@ -82,7 +82,7 @@ lxw_format * hb_XLSXFormat_item( PHB_ITEM pValue )
  */
 HB_FUNC( LXW_FORMAT_NEW )
 {
-	printf( "Chiamato lxw_format_new\n" );
+	// printf( "Chiamato lxw_format_new\n" );
    lxw_format *format = lxw_format_new();
    hb_XLSXFormat_ret( format );
    // hb_retptr( format ); 
@@ -270,16 +270,16 @@ HB_FUNC( FORMAT_SET_FONT_COLOR )
  */
 HB_FUNC( FORMAT_SET_BOLD )
 { 
-   printf(" set bold\n" );
+    // printf(" set bold\n" );
 
    lxw_format * self = hb_XLSXFormat_par( 1 ); // hb_parptr( 1 ) ;
 
    if ( self ) {
-       printf( "bold settato\n" );
+        // printf( "bold settato\n" );
        self->bold = LXW_TRUE;
    }
-   else
-       printf( "bold non settato\n" );
+    // else
+        // printf( "bold non settato\n" );
 }
 
 
