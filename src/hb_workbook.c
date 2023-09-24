@@ -24,16 +24,16 @@
 
 static HB_GARBAGE_FUNC( XLSXWorkbook_release )
 {
-	// printf( "Chiamato hb_XLSXWorkbook_release 2\n" );
+//	 printf( "Chiamato hb_XLSXWorkbook_release 2\n" );
    void ** ph = ( void ** ) Cargo;
 
    /* Check if pointer is not NULL to avoid multiple freeing */
    if( ph && *ph )
    {
       /* Destroy the object */
-	 // printf( "Chiamato hb_XLSXWorkbook_release 3a\n" );
-      lxw_workbook_free( ( lxw_workbook * ) *ph );
-	 // printf( "Chiamato hb_XLSXWorkbook_release 3b\n" );
+//	  printf( "Chiamato hb_XLSXWorkbook_release 3a\n" );
+      // lxw_workbook_free(  *ph );
+//	  printf( "Chiamato hb_XLSXWorkbook_release 3b\n" );
 
       /* set pointer to NULL to avoid multiple freeing */
       *ph = NULL;
@@ -111,7 +111,10 @@ HB_FUNC( LXW_WORKBOOK_SET_DEFAULT_XF_INDICES )
 { 
    lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
 
+   if( self )
    lxw_workbook_set_default_xf_indices( self ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -136,7 +139,10 @@ HB_FUNC( LXW_WORKBOOK_ASSEMBLE_XML_FILE )
 { 
    lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
 
+   if( self )
    lxw_workbook_assemble_xml_file( self ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -238,7 +244,10 @@ HB_FUNC( WORKBOOK_ADD_CHARTSHEET )
    lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    const char *sheetname = hb_parcx( 2 ) ;
 
+   if( self )
    hb_retptr( workbook_add_chartsheet( self, sheetname ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -256,7 +265,10 @@ HB_FUNC( WORKBOOK_ADD_CHART )
    lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    uint8_t type = hb_parni( 2 ) ;
 
+   if( self )
    hb_retptr( workbook_add_chart( self, type ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 void hb_XLSXFormat_ret( lxw_format * p ) ;
@@ -273,7 +285,10 @@ HB_FUNC( WORKBOOK_ADD_FORMAT )
 { 
    lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
 
+   if( self )
    hb_XLSXFormat_ret( workbook_add_format( self ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
    // hb_retptr( workbook_add_format( self ) ); 
 }
 
@@ -289,9 +304,17 @@ HB_FUNC( WORKBOOK_ADD_FORMAT )
  */
 HB_FUNC( WORKBOOK_CLOSE )
 { 
+   int i;
    lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
+   
+   if ( self ) 
+   {
+      i = workbook_close( self ); 
+      hb_retni( i ); 
+   }
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 
-   hb_retni( workbook_close( self ) ); 
 }
 
 
@@ -312,7 +335,10 @@ HB_FUNC( WORKBOOK_DEFINE_NAME )
    const char *name = hb_parcx( 2 ) ;
    const char *formula = hb_parcx( 3 ) ;
 
+   if( self )
    hb_retni( workbook_define_name( self, name, formula ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -396,11 +422,16 @@ HB_FUNC( WORKBOOK_SET_PROPERTIES )
    lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    PHB_ITEM pHash = hb_param( 2, HB_IT_HASH );
 
+   if( self )
+   {
    lxw_doc_properties *user_props = hash2properties( pHash ) ;
 
    hb_retni( workbook_set_properties( self, user_props ) ); 
 
    hb_xfree( user_props );
+   }
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -420,7 +451,10 @@ HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_STRING )
    const char *name = hb_parcx( 2 ) ;
    const char *value = hb_parcx( 3 ) ;
 
+   if( self )
    hb_retni( workbook_set_custom_property_string( self, name, value ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -440,7 +474,10 @@ HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_NUMBER )
    const char *name = hb_parcx( 2 ) ;
    double value = hb_parnd( 3 ) ;
 
+   if( self )
    hb_retni( workbook_set_custom_property_number( self, name, value ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -460,7 +497,10 @@ HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_INTEGER )
    const char *name = hb_parcx( 2 ) ;
    int32_t value = hb_parnl(3 ) ;
 
+   if( self )
    hb_retni( workbook_set_custom_property_integer( self, name, value ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -480,7 +520,10 @@ HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_BOOLEAN )
    const char *name = hb_parcx( 2 ) ;
    uint8_t value = hb_parni( 3 ) ;
 
+   if( self )
    hb_retni( workbook_set_custom_property_boolean( self, name, value ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -500,7 +543,10 @@ HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_DATETIME )
    const char *name = hb_parcx( 2 ) ;
    lxw_datetime *datetime = hb_parptr(3 ) ;
 
+   if( self )
    hb_retni( workbook_set_custom_property_datetime( self, name, datetime ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -518,7 +564,10 @@ HB_FUNC( WORKBOOK_GET_WORKSHEET_BY_NAME )
    lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    const char *name = hb_parcx( 2 ) ;
 
+   if( self )
    hb_retptr( workbook_get_worksheet_by_name( self, name ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -536,7 +585,10 @@ HB_FUNC( WORKBOOK_GET_CHARTSHEET_BY_NAME )
    lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    const char *name = hb_parcx( 2 ) ;
 
+   if( self )
    hb_retptr( workbook_get_chartsheet_by_name( self, name ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
