@@ -33,9 +33,9 @@ procedure main()
 
     /* Create the fragments for the rich string. */
     hFragment1 := { "format" => NIL,  "string" => "This is"      }
-    hFragment2 := { "format" => red,  "string" => "red"          }
-    hFragment3 := { "format" => NIL,  "string" => " and this is" }
-    hFragment4 := { "format" => blue, "string" => "blue"         }
+    hFragment2 := { "format" => red,  "string" => " red "          }
+    hFragment3 := { "format" => NIL,  "string" => "and this is" }
+    hFragment4 := { "format" => blue, "string" => " blue"         }
 
     aRich_strings := { hFragment1, hFragment2, hFragment3, hFragment4 }
 

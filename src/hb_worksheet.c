@@ -688,6 +688,8 @@ HB_FUNC( WORKSHEET_WRITE_URL )
 
 
 
+lxw_format * hb_XLSXFormat_item( PHB_ITEM pValue );
+
 
 /*
  * Write a rich string to an Excel file.
@@ -739,9 +741,8 @@ HB_FUNC( WORKSHEET_WRITE_RICH_STRING )
 
                char *key = (char *)hb_itemGetC( pKey );
 
-               if( hb_stricmp( key, "format" ) == 0 ){  // FP: check how to retrieve
-                  tuple->format = (lxw_format *) hb_itemGetPtr( pValue ) ;
-
+               if( hb_stricmp( key, "format" ) == 0 ){
+                  tuple->format = (lxw_format *) hb_XLSXFormat_item( pValue ) ;
                }
                if( hb_stricmp( key, "string" ) == 0 ){
                   tuple->string = (char *) hb_itemGetC( pValue ) ;
