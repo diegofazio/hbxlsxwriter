@@ -22,6 +22,59 @@
 #include "hbapiitm.h"
 
 
+static HB_GARBAGE_FUNC( XLSXWorkbook_release )
+{
+	// printf( "Chiamato hb_XLSXWorkbook_release 2\n" );
+   void ** ph = ( void ** ) Cargo;
+
+   /* Check if pointer is not NULL to avoid multiple freeing */
+   if( ph && *ph )
+   {
+      /* Destroy the object */
+	 // printf( "Chiamato hb_XLSXWorkbook_release 3a\n" );
+      lxw_workbook_free( ( lxw_workbook * ) *ph );
+	 // printf( "Chiamato hb_XLSXWorkbook_release 3b\n" );
+
+      /* set pointer to NULL to avoid multiple freeing */
+      *ph = NULL;
+   }
+}
+
+static const HB_GC_FUNCS s_gcXLSXWorkbookFuncs =
+{
+   XLSXWorkbook_release,
+   hb_gcDummyMark
+};
+
+void hb_XLSXWorkbook_ret( lxw_workbook * p )
+{
+    // fprintf( stderr,"Chiamato hb_XLSXWorkbook_ret\n" );
+   if( p )
+   {
+      void ** ph = ( void ** ) hb_gcAllocate( sizeof( lxw_workbook * ), &s_gcXLSXWorkbookFuncs );
+
+      *ph = p;
+
+      hb_retptrGC( ph );
+   }
+   else
+      hb_retptr( NULL );
+}
+
+lxw_workbook * hb_XLSXWorkbook_par( int iParam )
+{
+   void ** ph = ( void ** ) hb_parptrGC( &s_gcXLSXWorkbookFuncs, iParam );
+
+   return ph ? ( lxw_workbook * ) *ph : NULL;
+}
+
+lxw_workbook * hb_XLSXWorkbook_item( PHB_ITEM pValue )
+{
+   void ** ph = ( void ** ) hb_itemGetPtrGC( pValue, &s_gcXLSXWorkbookFuncs );
+
+   return ph ? ( lxw_workbook * ) *ph : NULL;
+}
+
 /*****************************************************************************
  *
  * Private functions.
@@ -36,10 +89,12 @@
  *
  */
 HB_FUNC( LXW_WORKBOOK_FREE )
-{ 
-   lxw_workbook *workbook = hb_parptr( 1 ) ;
+{
+       //	
+       printf( "LXW_WORKBOOK_FREE non deve essere chiamata direttamente\n");
+   //lxw_workbook *workbook = hb_XLSXWorkbook_par( 1 ) ;
 
-   lxw_workbook_free( workbook ); 
+   //lxw_workbook_free( workbook ); 
 }
 
 
@@ -54,7 +109,7 @@ HB_FUNC( LXW_WORKBOOK_FREE )
  */
 HB_FUNC( LXW_WORKBOOK_SET_DEFAULT_XF_INDICES )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
 
    lxw_workbook_set_default_xf_indices( self ); 
 }
@@ -79,7 +134,7 @@ HB_FUNC( LXW_WORKBOOK_SET_DEFAULT_XF_INDICES )
  */
 HB_FUNC( LXW_WORKBOOK_ASSEMBLE_XML_FILE )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
 
    lxw_workbook_assemble_xml_file( self ); 
 }
@@ -108,7 +163,7 @@ HB_FUNC( WORKBOOK_NEW )
 { 
    const char *filename = hb_parcx( 1 ) ;
 
-   hb_retptr( workbook_new( filename ) ); 
+   hb_XLSXWorkbook_ret( workbook_new( filename ) ); 
 }
 
 /* Deprecated function name for backwards compatibility. */
@@ -119,7 +174,7 @@ new_workbook(const char *filename)
 HB_FUNC( NEW_WORKBOOK )
 {
    const char *filename = hb_parcx( 1 ) ;
-   hb_retptr( workbook_new_opt(filename, NULL) );
+   hb_XLSXWorkbook_ret( workbook_new_opt(filename, NULL) );
 }
 
 
@@ -136,11 +191,11 @@ HB_FUNC( WORKBOOK_NEW_OPT )
    lxw_workbook_options *options = hb_param( 2, HB_IT_ANY );
    if HB_ISNIL( 2 )
    {
-      workbook_new_opt(filename, NULL);
+      hb_XLSXWorkbook_ret( workbook_new_opt(filename, NULL));
    }
    else
    {
-      workbook_new_opt(filename, options);
+      hb_XLSXWorkbook_ret(workbook_new_opt(filename, options));
    }
 }
 
@@ -156,7 +211,7 @@ HB_FUNC( WORKBOOK_NEW_OPT )
  */
 HB_FUNC( WORKBOOK_ADD_WORKSHEET )
 { 
-   lxw_workbook *self = hb_parptr(1);
+   lxw_workbook *self = hb_XLSXWorkbook_par(1);
    const char *sheetname = hb_parcx( 2 );
    if ( HB_ISNIL( 2 ) || strlen(sheetname) == 0 )
    {
@@ -180,7 +235,7 @@ HB_FUNC( WORKBOOK_ADD_WORKSHEET )
  */
 HB_FUNC( WORKBOOK_ADD_CHARTSHEET )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    const char *sheetname = hb_parcx( 2 ) ;
 
    hb_retptr( workbook_add_chartsheet( self, sheetname ) ); 
@@ -198,7 +253,7 @@ HB_FUNC( WORKBOOK_ADD_CHARTSHEET )
  */
 HB_FUNC( WORKBOOK_ADD_CHART )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    uint8_t type = hb_parni( 2 ) ;
 
    hb_retptr( workbook_add_chart( self, type ) ); 
@@ -216,7 +271,7 @@ void hb_XLSXFormat_ret( lxw_format * p ) ;
  */
 HB_FUNC( WORKBOOK_ADD_FORMAT )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
 
    hb_XLSXFormat_ret( workbook_add_format( self ) ); 
    // hb_retptr( workbook_add_format( self ) ); 
@@ -234,7 +289,7 @@ HB_FUNC( WORKBOOK_ADD_FORMAT )
  */
 HB_FUNC( WORKBOOK_CLOSE )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
 
    hb_retni( workbook_close( self ) ); 
 }
@@ -253,7 +308,7 @@ HB_FUNC( WORKBOOK_CLOSE )
  */
 HB_FUNC( WORKBOOK_DEFINE_NAME )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    const char *name = hb_parcx( 2 ) ;
    const char *formula = hb_parcx( 3 ) ;
 
@@ -338,7 +393,7 @@ lxw_doc_properties * hash2properties( PHB_ITEM pHash )
  */
 HB_FUNC( WORKBOOK_SET_PROPERTIES )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    PHB_ITEM pHash = hb_param( 2, HB_IT_HASH );
 
    lxw_doc_properties *user_props = hash2properties( pHash ) ;
@@ -361,7 +416,7 @@ HB_FUNC( WORKBOOK_SET_PROPERTIES )
  */
 HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_STRING )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    const char *name = hb_parcx( 2 ) ;
    const char *value = hb_parcx( 3 ) ;
 
@@ -381,7 +436,7 @@ HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_STRING )
  */
 HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_NUMBER )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    const char *name = hb_parcx( 2 ) ;
    double value = hb_parnd( 3 ) ;
 
@@ -401,7 +456,7 @@ HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_NUMBER )
  */
 HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_INTEGER )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    const char *name = hb_parcx( 2 ) ;
    int32_t value = hb_parnl(3 ) ;
 
@@ -421,7 +476,7 @@ HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_INTEGER )
  */
 HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_BOOLEAN )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    const char *name = hb_parcx( 2 ) ;
    uint8_t value = hb_parni( 3 ) ;
 
@@ -441,7 +496,7 @@ HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_BOOLEAN )
  */
 HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_DATETIME )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    const char *name = hb_parcx( 2 ) ;
    lxw_datetime *datetime = hb_parptr(3 ) ;
 
@@ -460,7 +515,7 @@ HB_FUNC( WORKBOOK_SET_CUSTOM_PROPERTY_DATETIME )
  */
 HB_FUNC( WORKBOOK_GET_WORKSHEET_BY_NAME )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    const char *name = hb_parcx( 2 ) ;
 
    hb_retptr( workbook_get_worksheet_by_name( self, name ) ); 
@@ -478,7 +533,7 @@ HB_FUNC( WORKBOOK_GET_WORKSHEET_BY_NAME )
  */
 HB_FUNC( WORKBOOK_GET_CHARTSHEET_BY_NAME )
 { 
-   lxw_workbook *self = hb_parptr( 1 ) ;
+   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
    const char *name = hb_parcx( 2 ) ;
 
    hb_retptr( workbook_get_chartsheet_by_name( self, name ) ); 
