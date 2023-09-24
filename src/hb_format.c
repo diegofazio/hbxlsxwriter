@@ -46,7 +46,7 @@ static const HB_GC_FUNCS s_gcXLSXFormatFuncs =
 
 void hb_XLSXFormat_ret( lxw_format * p )
 {
-    // fprintf( stderr,"Chiamato hb_XLSXFormat_ret\n" );
+   
    if( p )
    {
       void ** ph = ( void ** ) hb_gcAllocate( sizeof( lxw_format * ), &s_gcXLSXFormatFuncs );
@@ -99,7 +99,8 @@ HB_FUNC( LXW_FORMAT_NEW )
  * 
  */
 HB_FUNC( LXW_FORMAT_FREE )
-{ 
+{  
+	printf( "Chiamato LXW_FORMAT_FREE\n" );
    // lxw_format *format = hb_parptr( 1 ) ;
 
    // lxw_format_free( format ); 
@@ -150,7 +151,10 @@ HB_FUNC( LXW_FORMAT_GET_FONT_KEY )
 { 
    lxw_format *self = hb_XLSXFormat_par(1 ) ;
 
+   if( self )
    hb_retptr( lxw_format_get_font_key( self ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -167,7 +171,10 @@ HB_FUNC( LXW_FORMAT_GET_BORDER_KEY )
 { 
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
 
+   if( self )
    hb_retptr( lxw_format_get_border_key( self ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -184,7 +191,10 @@ HB_FUNC( LXW_FORMAT_GET_FILL_KEY )
 { 
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
 
+   if( self )
    hb_retptr( lxw_format_get_fill_key( self ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -201,7 +211,10 @@ HB_FUNC( LXW_FORMAT_GET_XF_INDEX )
 { 
    lxw_format *self = hb_XLSXFormat_par(1 ) ;
 
+   if( self )
    hb_retnl( lxw_format_get_xf_index( self ) ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -218,7 +231,10 @@ HB_FUNC( FORMAT_SET_FONT_NAME )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    const char *font_name = hb_parcx( 2 ) ;
 
+   if( self )
    format_set_font_name( self, font_name ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -236,7 +252,10 @@ HB_FUNC( FORMAT_SET_FONT_SIZE )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    double size = hb_parnd( 2 ) ;
 
+   if( self )
    format_set_font_size( self, size ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -255,7 +274,10 @@ HB_FUNC( FORMAT_SET_FONT_COLOR )
    lxw_color_t color = hb_parnl(2 ) ;
 
 //   self->font_color = lxw_format_check_color(color);
+   if( self )
    self->font_color = color;
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -278,6 +300,8 @@ HB_FUNC( FORMAT_SET_BOLD )
         // printf( "bold settato\n" );
        self->bold = LXW_TRUE;
    }
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
     // else
         // printf( "bold non settato\n" );
 }
@@ -296,7 +320,10 @@ HB_FUNC( FORMAT_SET_ITALIC )
 { 
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
 
+   if( self )
    self->italic = LXW_TRUE;
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -314,7 +341,10 @@ HB_FUNC( FORMAT_SET_UNDERLINE )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t style = hb_parni( 2 ) ;
 
+   if( self )
    format_set_underline( self, style ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -331,7 +361,10 @@ HB_FUNC( FORMAT_SET_FONT_STRIKEOUT )
 { 
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
 
+   if( self )
    format_set_font_strikeout( self ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -349,7 +382,10 @@ HB_FUNC( FORMAT_SET_FONT_SCRIPT )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t style = hb_parni( 2 ) ;
 
+   if( self )
    format_set_font_script( self, style ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -366,7 +402,10 @@ HB_FUNC( FORMAT_SET_FONT_OUTLINE )
 { 
    lxw_format *self = hb_XLSXFormat_par(1 ) ;
 
+   if( self )
    format_set_font_outline( self ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -383,7 +422,10 @@ HB_FUNC( FORMAT_SET_FONT_SHADOW )
 { 
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
 
+   if( self )
    format_set_font_shadow( self ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -401,7 +443,10 @@ HB_FUNC( FORMAT_SET_NUM_FORMAT )
    lxw_format * self = hb_XLSXFormat_par( 1 ) ; // hb_parptr( 1 ) ;
    const char *num_format = hb_parcx( 2 ) ;
 
+   if( self )
    format_set_num_format( self, num_format ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -418,7 +463,10 @@ HB_FUNC( FORMAT_SET_UNLOCKED )
 { 
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
 
+   if( self )
    format_set_unlocked( self ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -435,7 +483,10 @@ HB_FUNC( FORMAT_SET_HIDDEN )
 { 
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
 
+   if( self )
    format_set_hidden( self ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -452,8 +503,12 @@ HB_FUNC( FORMAT_SET_ALIGN )
 { 
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t value = hb_parni( 2 ) ;
+   // fprintf( stderr, "sono qui\n" );
 
-   format_set_align( self, value ); 
+   if( self )
+      format_set_align( self, value ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -470,7 +525,10 @@ HB_FUNC( FORMAT_SET_TEXT_WRAP )
 { 
    lxw_format *self = hb_XLSXFormat_par(1 ) ;
 
+   if( self )
    format_set_text_wrap( self ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -488,7 +546,10 @@ HB_FUNC( FORMAT_SET_ROTATION )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    int16_t angle = hb_parnl( 2 ) ;
 
+   if( self )
    format_set_rotation( self, angle ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -506,7 +567,10 @@ HB_FUNC( FORMAT_SET_INDENT )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t value = hb_parni( 2 ) ;
 
+   if( self )
    format_set_indent( self, value ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -523,7 +587,10 @@ HB_FUNC( FORMAT_SET_SHRINK )
 { 
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
 
+   if( self )
    format_set_shrink( self ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -559,7 +626,10 @@ HB_FUNC( FORMAT_SET_PATTERN )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t value = hb_parni( 2 ) ;
 
+   if( self )
    format_set_pattern( self, value ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -577,7 +647,10 @@ HB_FUNC( FORMAT_SET_BG_COLOR )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    lxw_color_t color = hb_parnl( 2 ) ;
 
+   if( self )
    format_set_bg_color( self, color ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -595,7 +668,10 @@ HB_FUNC( FORMAT_SET_FG_COLOR )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    lxw_color_t color = hb_parnl( 2 ) ;
 
+   if( self )
    format_set_fg_color( self, color ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -613,7 +689,10 @@ HB_FUNC( FORMAT_SET_BORDER )
    lxw_format *self = hb_XLSXFormat_par(1 ) ;
    uint8_t style = hb_parni( 2 ) ;
 
+   if( self )
    format_set_border( self, style ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -631,7 +710,10 @@ HB_FUNC( FORMAT_SET_BORDER_COLOR )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    lxw_color_t color = hb_parnl( 2 ) ;
 
+   if( self )
    format_set_border_color( self, color ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -649,7 +731,10 @@ HB_FUNC( FORMAT_SET_BOTTOM )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t style = hb_parni( 2 ) ;
 
+   if( self )
    format_set_bottom( self, style ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -667,7 +752,10 @@ HB_FUNC( FORMAT_SET_BOTTOM_COLOR )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    lxw_color_t color = hb_parnl( 2 ) ;
 
+   if( self )
    format_set_bottom_color( self, color) ; 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -685,7 +773,10 @@ HB_FUNC( FORMAT_SET_LEFT )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t style = hb_parni( 2 ) ;
 
+   if( self )
    format_set_left( self, style ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -703,7 +794,10 @@ HB_FUNC( FORMAT_SET_LEFT_COLOR )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    lxw_color_t color = hb_parnl( 2 ) ;
 
+   if( self )
    format_set_left_color( self, color ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -721,7 +815,10 @@ HB_FUNC( FORMAT_SET_RIGHT )
    lxw_format *self = hb_XLSXFormat_par(1 ) ;
    uint8_t style = hb_parni( 2 ) ;
 
+   if( self )
    format_set_right( self, style ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -739,7 +836,10 @@ HB_FUNC( FORMAT_SET_RIGHT_COLOR )
    lxw_format *self = hb_XLSXFormat_par(1 ) ;
    lxw_color_t color = hb_parnl(2 ) ;
 
+   if( self )
    format_set_right_color( self, color ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -757,7 +857,10 @@ HB_FUNC( FORMAT_SET_TOP )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t style = hb_parni( 2 ) ;
 
+   if( self )
    format_set_top( self, style ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -775,7 +878,10 @@ HB_FUNC( FORMAT_SET_TOP_COLOR )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    lxw_color_t color = hb_parnl(2 ) ;
 
+   if( self )
    format_set_top_color( self, color ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -793,7 +899,10 @@ HB_FUNC( FORMAT_SET_DIAG_TYPE )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t type = hb_parni( 2 ) ;
 
+   if( self )
    format_set_diag_type( self, type ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -811,7 +920,10 @@ HB_FUNC( FORMAT_SET_DIAG_COLOR )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    lxw_color_t color = hb_parnl(2 ) ;
 
+   if( self )
    format_set_diag_color( self, color ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -829,7 +941,10 @@ HB_FUNC( FORMAT_SET_DIAG_BORDER )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t style = hb_parni( 2 ) ;
 
+   if( self )
    format_set_diag_border( self, style ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -847,7 +962,10 @@ HB_FUNC( FORMAT_SET_NUM_FORMAT_INDEX )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t value = hb_parni( 2 ) ;
 
+   if( self )
    format_set_num_format_index( self, value ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -866,7 +984,10 @@ HB_FUNC( FORMAT_SET_VALIGN )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t value = hb_parni( 2 ) ;
 
+   if( self )
    format_set_valign( self, value ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 */
 
@@ -884,7 +1005,10 @@ HB_FUNC( FORMAT_SET_READING_ORDER )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t value = hb_parni( 2 ) ;
 
+   if( self )
    format_set_reading_order( self, value ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -902,7 +1026,10 @@ HB_FUNC( FORMAT_SET_FONT_FAMILY )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t value = hb_parni( 2 ) ;
 
+   if( self )
    format_set_font_family( self, value ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -920,7 +1047,10 @@ HB_FUNC( FORMAT_SET_FONT_CHARSET )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    uint8_t value = hb_parni( 2 ) ;
 
+   if( self )
    format_set_font_charset( self, value ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -938,7 +1068,10 @@ HB_FUNC( FORMAT_SET_FONT_SCHEME )
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
    const char *font_scheme = hb_parcx( 2 ) ;
 
+   if( self )
    format_set_font_scheme( self, font_scheme ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -955,7 +1088,10 @@ HB_FUNC( FORMAT_SET_FONT_CONDENSE )
 { 
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
 
+   if( self )
    format_set_font_condense( self ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -972,7 +1108,10 @@ HB_FUNC( FORMAT_SET_FONT_EXTEND )
 { 
    lxw_format *self = hb_XLSXFormat_par( 1 ) ;
 
+   if( self )
    format_set_font_extend( self ); 
+   else
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
