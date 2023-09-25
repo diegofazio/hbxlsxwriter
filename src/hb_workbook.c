@@ -28,16 +28,16 @@ typedef struct
 
 static HB_GARBAGE_FUNC( XLSXWorkbook_release )
 {
-   printf( "Chiamato hb_XLSXWorkbook_release 2\n" );
+   // printf( "Chiamato hb_XLSXWorkbook_release 2\n" );
    PHB_WORKBOOK_GC pGC = ( PHB_WORKBOOK_GC ) Cargo;
 
    /* Check if pointer is not NULL to avoid multiple freeing */
    if( pGC->workbook )
    {
       /* Destroy the object */
-      printf( "Chiamato hb_XLSXWorkbook_release 3a\n" );
+      // printf( "Chiamato hb_XLSXWorkbook_release 3a\n" );
       lxw_workbook_free( pGC->workbook );
-      printf( "Chiamato hb_XLSXWorkbook_release 3b\n" );
+      // printf( "Chiamato hb_XLSXWorkbook_release 3b\n" );
 
       /* set pointer to NULL to avoid multiple freeing */
       pGC->workbook = NULL;
@@ -74,7 +74,6 @@ void hb_XLSXWorkbook_ret( lxw_workbook * p )
 
 lxw_workbook * hb_XLSXWorkbook_par( int iParam )
 {
-   // void ** ph = ( void ** ) hb_parptrGC( &s_gcXLSXWorkbookFuncs, iParam );
 
    PHB_WORKBOOK_GC pGC = ( PHB_WORKBOOK_GC ) hb_parptrGC( &s_gcXLSXWorkbookFuncs, iParam ); 
 
@@ -83,8 +82,6 @@ lxw_workbook * hb_XLSXWorkbook_par( int iParam )
    else
 	   return NULL;
 
-
-   //return ph ? ( lxw_workbook * ) *ph : NULL;
 }
 
 lxw_workbook * hb_XLSXWorkbook_item( PHB_ITEM pValue )
@@ -96,7 +93,6 @@ lxw_workbook * hb_XLSXWorkbook_item( PHB_ITEM pValue )
    else
 	   return NULL;
 
-   // return ph ? ( lxw_workbook * ) *ph : NULL;
 }
 
 /*****************************************************************************
@@ -112,14 +108,14 @@ lxw_workbook * hb_XLSXWorkbook_item( PHB_ITEM pValue )
  * lxw_workbook_free(lxw_workbook *workbook)
  *
  */
-HB_FUNC( LXW_WORKBOOK_FREE )
-{
+// HB_FUNC( LXW_WORKBOOK_FREE )
+// {
        //	
-       printf( "LXW_WORKBOOK_FREE non deve essere chiamata direttamente\n");
+//        printf( "LXW_WORKBOOK_FREE non deve essere chiamata direttamente\n");
    //lxw_workbook *workbook = hb_XLSXWorkbook_par( 1 ) ;
 
    //lxw_workbook_free( workbook ); 
-}
+// }
 
 
 
@@ -131,6 +127,7 @@ HB_FUNC( LXW_WORKBOOK_FREE )
  * lxw_workbook_set_default_xf_indices(lxw_workbook *self)
  *
  */
+/*
 HB_FUNC( LXW_WORKBOOK_SET_DEFAULT_XF_INDICES )
 { 
    lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
@@ -140,7 +137,7 @@ HB_FUNC( LXW_WORKBOOK_SET_DEFAULT_XF_INDICES )
    else
       hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
-
+*/
 
 
 
@@ -159,6 +156,8 @@ HB_FUNC( LXW_WORKBOOK_SET_DEFAULT_XF_INDICES )
  * lxw_workbook_assemble_xml_file(lxw_workbook *self)
  *
  */
+
+/*
 HB_FUNC( LXW_WORKBOOK_ASSEMBLE_XML_FILE )
 { 
    lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
@@ -169,7 +168,7 @@ HB_FUNC( LXW_WORKBOOK_ASSEMBLE_XML_FILE )
       hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
-
+*/
 
 
 /*
@@ -269,7 +268,7 @@ HB_FUNC( WORKBOOK_ADD_CHARTSHEET )
    const char *sheetname = hb_parcx( 2 ) ;
 
    if( self )
-   hb_retptr( workbook_add_chartsheet( self, sheetname ) ); 
+      hb_retptr( workbook_add_chartsheet( self, sheetname ) ); 
    else
       hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
