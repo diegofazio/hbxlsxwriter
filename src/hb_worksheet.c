@@ -150,7 +150,10 @@ HB_FUNC( LXW_WORKSHEET_FIND_ROW )
    lxw_worksheet *self = hb_parptr( 1 ) ;
    lxw_row_t row_num = hb_parni( 2 ) ;
 
-   hb_retptr( lxw_worksheet_find_row( self, row_num) ); 
+   if( self )
+      hb_retptr( lxw_worksheet_find_row( self, row_num) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 /*
@@ -362,7 +365,10 @@ HB_FUNC( LXW_WORKSHEET_WRITE_SINGLE_ROW )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   lxw_worksheet_write_single_row( self ); 
+   if( self )
+      lxw_worksheet_write_single_row( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -377,7 +383,10 @@ HB_FUNC( LXW_WORKSHEET_WRITE_SHEET_VIEWS )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   lxw_worksheet_write_sheet_views( self ); 
+   if( self )
+      lxw_worksheet_write_sheet_views( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -392,7 +401,10 @@ HB_FUNC( LXW_WORKSHEET_ASSEMBLE_XML_FILE )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   lxw_worksheet_assemble_xml_file( self ); 
+   if( self )
+      lxw_worksheet_assemble_xml_file( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -424,7 +436,10 @@ HB_FUNC( WORKSHEET_WRITE_NUMBER )
    double value = hb_parnd(4 ) ;
    lxw_format *format = hb_XLSXFormat_par(5 ) ;
 
-   hb_retni( worksheet_write_number( self, row_num, col_num, value, format ) ); 
+   if( self )
+      hb_retni( worksheet_write_number( self, row_num, col_num, value, format ) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -447,7 +462,10 @@ HB_FUNC( WORKSHEET_WRITE_STRING )
    const char *string  = hb_parcx( 4 ) ;
    lxw_format *format  = hb_XLSXFormat_par( 5 ) ;
 
-   hb_retni( worksheet_write_string( self, row_num, col_num, string, format) ); 
+   if( self )
+      hb_retni( worksheet_write_string( self, row_num, col_num, string, format) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -472,7 +490,10 @@ HB_FUNC( WORKSHEET_WRITE_FORMULA_NUM )
    lxw_format *format = hb_XLSXFormat_par( 5 ) ;
    double result = hb_parnd(6 ) ;
 
-   hb_retni( worksheet_write_formula_num( self, row_num, col_num, formula, format, result ) ); 
+   if( self )
+      hb_retni( worksheet_write_formula_num( self, row_num, col_num, formula, format, result ) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -495,7 +516,10 @@ HB_FUNC( WORKSHEET_WRITE_FORMULA )
    const char *formula = hb_parcx( 4 ) ;
    lxw_format *format = hb_XLSXFormat_par( 5 ) ;
 
-   hb_retni( worksheet_write_formula( self, row_num, col_num, formula, format ) ); 
+   if( self )
+      hb_retni( worksheet_write_formula( self, row_num, col_num, formula, format ) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -524,7 +548,10 @@ HB_FUNC( WORKSHEET_WRITE_ARRAY_FORMULA_NUM )
    lxw_format *format = hb_XLSXFormat_par(7 ) ;
    double result = hb_parnd(8 ) ;
 
-   hb_retni( worksheet_write_array_formula_num( self, first_row, first_col, last_row, last_col, formula, format, result ) ); 
+   if( self )
+      hb_retni( worksheet_write_array_formula_num( self, first_row, first_col, last_row, last_col, formula, format, result ) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -549,7 +576,10 @@ HB_FUNC( WORKSHEET_WRITE_ARRAY_FORMULA )
    const char *formula = hb_parcx( 6 ) ;
    lxw_format *format = hb_XLSXFormat_par(7 ) ;
 
-   hb_retni( worksheet_write_array_formula( self, first_row, first_col, last_row, last_col, formula, format ) ); 
+   if( self )
+      hb_retni( worksheet_write_array_formula( self, first_row, first_col, last_row, last_col, formula, format ) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -570,7 +600,10 @@ HB_FUNC( WORKSHEET_WRITE_BLANK )
    lxw_col_t col_num = hb_parni( 3 ) ;
    lxw_format *format = hb_XLSXFormat_par(4 ) ;
 
-   hb_retni( worksheet_write_blank( self, row_num, col_num, format ) ); 
+   if( self )
+      hb_retni( worksheet_write_blank( self, row_num, col_num, format ) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -591,7 +624,10 @@ HB_FUNC( WORKSHEET_WRITE_BOOLEAN )
    int value = hb_parni( 4 ) ;
    lxw_format *format = hb_XLSXFormat_par(5 ) ;
 
-   hb_retni( worksheet_write_boolean( self, row_num, col_num, value, format ) ); 
+   if( self )
+      hb_retni( worksheet_write_boolean( self, row_num, col_num, value, format ) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -635,7 +671,10 @@ HB_FUNC( WORKSHEET_WRITE_DATETIME )
 
    lxw_format *format = hb_XLSXFormat_par(5 ) ;
 
-   hb_retni( worksheet_write_datetime( self, row_num, col_num, &datetime, format ) ); 
+   if( self )
+      hb_retni( worksheet_write_datetime( self, row_num, col_num, &datetime, format ) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -661,7 +700,10 @@ HB_FUNC( WORKSHEET_WRITE_URL_OPT )
    const char *string = hb_parcx( 6 ) ;
    const char *tooltip = hb_parcx( 7 ) ;
 
-   hb_retni( worksheet_write_url_opt( self, row_num, col_num, url, format, string, tooltip ) ); 
+   if( self )
+      hb_retni( worksheet_write_url_opt( self, row_num, col_num, url, format, string, tooltip ) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -683,7 +725,10 @@ HB_FUNC( WORKSHEET_WRITE_URL )
    const char *url = hb_parcx( 4 ) ;
    lxw_format *format = hb_XLSXFormat_par(5 ) ;
 
-   hb_retni( worksheet_write_url( self, row_num, col_num, url, format ) ); 
+   if( self )
+      hb_retni( worksheet_write_url( self, row_num, col_num, url, format ) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -714,7 +759,7 @@ HB_FUNC( WORKSHEET_WRITE_RICH_STRING )
    PHB_ITEM pArray     = hb_param( 4, HB_IT_ARRAY );
    lxw_format *format  = hb_XLSXFormat_par( 5 );
 
-   if( pArray && HB_IS_ARRAY( pArray ) && hb_arrayLen( pArray ) > 0 )
+   if( pArray && HB_IS_ARRAY( pArray ) && hb_arrayLen( pArray ) > 0 && self )
    {
       HB_SIZE nLen = hb_arrayLen( pArray );
       lxw_rich_string_tuple **rich_strings = ( lxw_rich_string_tuple **) 
@@ -807,7 +852,10 @@ HB_FUNC( WORKSHEET_SET_COLUMN_OPT )
    lxw_format *format = hb_XLSXFormat_par(5); // hb_parptr(5 ) ;
    lxw_row_col_options *user_options = hb_parptr(6 ) ;
 
-   hb_retni( worksheet_set_column_opt( self, firstcol, lastcol, width, format, user_options) ); 
+   if( self )
+      hb_retni( worksheet_set_column_opt( self, firstcol, lastcol, width, format, user_options) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -830,10 +878,12 @@ HB_FUNC( WORKSHEET_SET_COLUMN )
    double width = hb_parnd( 4 ) ;
    lxw_format *format = hb_XLSXFormat_par(5 ) ;
 
-   hb_retni( worksheet_set_column( self, firstcol, lastcol, width, format) ); 
+   if( self )
+      hb_retni( worksheet_set_column( self, firstcol, lastcol, width, format) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+
 }
-
-
 
 
 /*
@@ -853,7 +903,10 @@ HB_FUNC( WORKSHEET_SET_ROW_OPT )
    lxw_format *format = hb_XLSXFormat_par(4 ) ;
    lxw_row_col_options *user_options = hb_parptr(5 ) ;
 
-   hb_retni( worksheet_set_row_opt( self, row_num, height, format, user_options) ); 
+   if( self )
+      hb_retni( worksheet_set_row_opt( self, row_num, height, format, user_options) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -874,7 +927,10 @@ HB_FUNC( WORKSHEET_SET_ROW )
    double height = hb_parnd( 3 ) ;
    lxw_format *format = hb_XLSXFormat_par(4 ) ;
 
-   hb_retni( worksheet_set_row( self, row_num, height, format) ); 
+   if( self )
+      hb_retni( worksheet_set_row( self, row_num, height, format) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -900,7 +956,10 @@ HB_FUNC( WORKSHEET_MERGE_RANGE )
    const char *string = hb_parcx( 6 ) ;
    lxw_format *format = hb_XLSXFormat_par(7 ) ;
 
-   hb_retni( worksheet_merge_range( self, first_row, first_col, last_row, last_col, string, format) ); 
+   if( self )
+      hb_retni( worksheet_merge_range( self, first_row, first_col, last_row, last_col, string, format) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -922,7 +981,10 @@ HB_FUNC( WORKSHEET_AUTOFILTER )
    lxw_row_t last_row  = hb_parni( 4 ) ;
    lxw_col_t last_col  = hb_parni( 5 ) ;
 
-   hb_retni( worksheet_autofilter( self, first_row, first_col, last_row, last_col ) ); 
+   if( self )
+      hb_retni( worksheet_autofilter( self, first_row, first_col, last_row, last_col ) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -940,7 +1002,10 @@ HB_FUNC( WORKSHEET_SELECT )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   worksheet_select( self ) ; 
+   if( self )
+      worksheet_select( self ) ; 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -958,7 +1023,10 @@ HB_FUNC( WORKSHEET_ACTIVATE )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   worksheet_activate( self ); 
+   if( self )
+      worksheet_activate( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -977,7 +1045,10 @@ HB_FUNC( WORKSHEET_SET_FIRST_SHEET )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   worksheet_set_first_sheet( self ); 
+   if( self )
+      worksheet_set_first_sheet( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -994,7 +1065,10 @@ HB_FUNC( WORKSHEET_HIDE )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   worksheet_hide( self ); 
+   if( self )
+      worksheet_hide( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1017,7 +1091,10 @@ HB_FUNC( WORKSHEET_SET_SELECTION )
    lxw_row_t last_row = hb_parni( 4 ) ;
    lxw_col_t last_col = hb_parni( 5 ) ;
 
-   worksheet_set_selection( self, first_row, first_col, last_row, last_col); 
+   if( self )
+      worksheet_set_selection( self, first_row, first_col, last_row, last_col); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1042,7 +1119,10 @@ HB_FUNC( WORKSHEET_FREEZE_PANES_OPT )
    lxw_col_t left_col = hb_parni( 5 ) ;
    uint8_t type = hb_parni( 6 ) ;
 
-   worksheet_freeze_panes_opt( self, first_row, first_col, top_row, left_col, type); 
+   if( self )
+      worksheet_freeze_panes_opt( self, first_row, first_col, top_row, left_col, type); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1062,7 +1142,10 @@ HB_FUNC( WORKSHEET_FREEZE_PANES )
    lxw_row_t first_row = hb_parni( 2 ) ;
    lxw_col_t first_col = hb_parni( 3 ) ;
 
-   worksheet_freeze_panes( self, first_row, first_col); 
+   if( self )
+      worksheet_freeze_panes( self, first_row, first_col); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1085,7 +1168,10 @@ HB_FUNC( WORKSHEET_SPLIT_PANES_OPT )
    lxw_row_t top_row = hb_parni( 4 ) ;
    lxw_col_t left_col = hb_parni( 5 ) ;
 
-   worksheet_split_panes_opt( self, y_split, x_split, top_row, left_col); 
+   if( self )
+      worksheet_split_panes_opt( self, y_split, x_split, top_row, left_col); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1104,7 +1190,10 @@ HB_FUNC( WORKSHEET_SPLIT_PANES )
    double y_split = hb_parnd( 2 ) ;
    double x_split = hb_parnd( 3 ) ;
 
-   worksheet_split_panes( self, y_split, x_split); 
+   if( self )
+      worksheet_split_panes( self, y_split, x_split); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1121,7 +1210,10 @@ HB_FUNC( WORKSHEET_SET_PORTRAIT )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   worksheet_set_portrait( self ); 
+   if( self )
+      worksheet_set_portrait( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1138,7 +1230,10 @@ HB_FUNC( WORKSHEET_SET_LANDSCAPE )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   worksheet_set_landscape( self ); 
+   if( self )
+      worksheet_set_landscape( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1155,7 +1250,10 @@ HB_FUNC( WORKSHEET_SET_PAGE_VIEW )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   worksheet_set_page_view( self ); 
+   if( self )
+      worksheet_set_page_view( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1173,7 +1271,10 @@ HB_FUNC( WORKSHEET_SET_PAPER )
    lxw_worksheet *self = hb_parptr( 1 ) ;
    uint8_t paper_size = hb_parni( 2 ) ;
 
-   worksheet_set_paper( self, paper_size); 
+   if( self )
+      worksheet_set_paper( self, paper_size); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1190,7 +1291,10 @@ HB_FUNC( WORKSHEET_PRINT_ACROSS )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   worksheet_print_across( self ); 
+   if( self )
+      worksheet_print_across( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1212,7 +1316,10 @@ HB_FUNC( WORKSHEET_SET_MARGINS )
    double top = hb_parnd( 4 ) ;
    double bottom = hb_parnd( 5 ) ;
 
-   worksheet_set_margins( self, left, right, top, bottom ); 
+   if( self )
+      worksheet_set_margins( self, left, right, top, bottom ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1232,7 +1339,10 @@ HB_FUNC( WORKSHEET_SET_HEADER_OPT )
    const char *string = hb_parcx( 2 ) ;
    lxw_header_footer_options options = { hb_parnd( 3 ) } ;
 
-   hb_retni( worksheet_set_header_opt( self, string, &options) ); 
+   if( self )
+      hb_retni( worksheet_set_header_opt( self, string, &options) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1252,7 +1362,10 @@ HB_FUNC( WORKSHEET_SET_FOOTER_OPT )
    const char *string = hb_parcx( 2 ) ;
    lxw_header_footer_options options = { hb_parnd( 3 ) } ;
 
-   hb_retni( worksheet_set_footer_opt( self, string, &options) ); 
+   if( self )
+      hb_retni( worksheet_set_footer_opt( self, string, &options) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1270,7 +1383,10 @@ HB_FUNC( WORKSHEET_SET_HEADER )
    lxw_worksheet *self = hb_parptr( 1 ) ;
    const char *string = hb_parcx( 2 ) ;
 
-   hb_retni( worksheet_set_header( self, string) ); 
+   if( self )
+      hb_retni( worksheet_set_header( self, string) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1288,7 +1404,10 @@ HB_FUNC( WORKSHEET_SET_FOOTER )
    lxw_worksheet *self = hb_parptr( 1 ) ;
    const char *string = hb_parcx( 2 ) ;
 
-   hb_retni( worksheet_set_footer( self, string) ); 
+   if( self )
+      hb_retni( worksheet_set_footer( self, string) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1306,7 +1425,10 @@ HB_FUNC( WORKSHEET_GRIDLINES )
    lxw_worksheet *self = hb_parptr( 1 ) ;
    uint8_t option = hb_parni( 2 ) ;
 
-   worksheet_gridlines( self, option ); 
+   if( self )
+      worksheet_gridlines( self, option ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1323,7 +1445,10 @@ HB_FUNC( WORKSHEET_CENTER_HORIZONTALLY )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   worksheet_center_horizontally( self ); 
+   if( self )
+      worksheet_center_horizontally( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1340,7 +1465,10 @@ HB_FUNC( WORKSHEET_CENTER_VERTICALLY )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   worksheet_center_vertically( self ); 
+   if( self )
+      worksheet_center_vertically( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1357,7 +1485,10 @@ HB_FUNC( WORKSHEET_PRINT_ROW_COL_HEADERS )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   worksheet_print_row_col_headers( self ); 
+   if( self )
+      worksheet_print_row_col_headers( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1377,7 +1508,10 @@ HB_FUNC( WORKSHEET_REPEAT_ROWS )
    lxw_row_t first_row = hb_parni( 2 ) ;
    lxw_row_t last_row = hb_parni( 3 ) ;
 
-   hb_retni( worksheet_repeat_rows( self, first_row, last_row) ); 
+   if( self )
+      hb_retni( worksheet_repeat_rows( self, first_row, last_row) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1397,7 +1531,10 @@ HB_FUNC( WORKSHEET_REPEAT_COLUMNS )
    lxw_col_t first_col = hb_parni( 2 ) ;
    lxw_col_t last_col = hb_parni( 3 ) ;
 
-   hb_retni( worksheet_repeat_columns( self, first_col, last_col) ); 
+   if( self )
+      hb_retni( worksheet_repeat_columns( self, first_col, last_col) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1420,7 +1557,10 @@ HB_FUNC( WORKSHEET_PRINT_AREA )
    lxw_row_t last_row = hb_parni( 4 ) ;
    lxw_col_t last_col = hb_parni( 5 ) ;
 
-   hb_retni( worksheet_print_area( self, first_row, first_col, last_row, last_col) ); 
+   if( self )
+      hb_retni( worksheet_print_area( self, first_row, first_col, last_row, last_col) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1439,7 +1579,10 @@ HB_FUNC( WORKSHEET_FIT_TO_PAGES )
    uint16_t width = hb_parnl( 2 ) ;
    uint16_t height = hb_parnl( 3 ) ;
 
-   worksheet_fit_to_pages( self, width, height ); 
+   if( self )
+      worksheet_fit_to_pages( self, width, height ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1457,7 +1600,10 @@ HB_FUNC( WORKSHEET_SET_START_PAGE )
    lxw_worksheet *self = hb_parptr( 1 ) ;
    uint16_t start_page = hb_parnl( 2 ) ;
 
-   worksheet_set_start_page( self, start_page ); 
+   if( self )
+      worksheet_set_start_page( self, start_page ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1475,7 +1621,10 @@ HB_FUNC( WORKSHEET_SET_PRINT_SCALE )
    lxw_worksheet *self = hb_parptr( 1 ) ;
    uint16_t scale = hb_parnl( 2 ) ;
 
-   worksheet_set_print_scale( self, scale ); 
+   if( self )
+      worksheet_set_print_scale( self, scale ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1532,7 +1681,10 @@ HB_FUNC( WORKSHEET_SET_ZOOM )
    lxw_worksheet *self = hb_parptr( 1 ) ;
    uint16_t scale = hb_parnl( 2 ) ;
 
-   worksheet_set_zoom( self, scale ); 
+   if( self )
+      worksheet_set_zoom( self, scale ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1549,7 +1701,10 @@ HB_FUNC( WORKSHEET_HIDE_ZERO )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   worksheet_hide_zero( self ); 
+   if( self )
+      worksheet_hide_zero( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1566,7 +1721,10 @@ HB_FUNC( WORKSHEET_RIGHT_TO_LEFT )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
 
-   worksheet_right_to_left( self ); 
+   if( self )
+      worksheet_right_to_left( self ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1584,7 +1742,10 @@ HB_FUNC( WORKSHEET_SET_TAB_COLOR )
    lxw_worksheet *self = hb_parptr( 1 ) ;
    lxw_color_t color = hb_parnl(2 ) ;
 
-   worksheet_set_tab_color( self, color ); 
+   if( self )
+      worksheet_set_tab_color( self, color ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1605,7 +1766,10 @@ HB_FUNC( WORKSHEET_PROTECT )
    const char *password = hb_parcx( 2 ) ;
    lxw_protection *options = hb_parptr(3 ) ;
 
-   worksheet_protect( self, password, options ); 
+   if( self )
+      worksheet_protect( self, password, options ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1628,7 +1792,10 @@ HB_FUNC( WORKSHEET_OUTLINE_SETTINGS )
    uint8_t symbols_right = hb_parni( 4 ) ;
    uint8_t auto_style = hb_parni( 5 ) ;
 
-   worksheet_outline_settings( self, visible, symbols_below, symbols_right, auto_style ); 
+   if( self )
+      worksheet_outline_settings( self, visible, symbols_below, symbols_right, auto_style ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1647,7 +1814,10 @@ HB_FUNC( WORKSHEET_SET_DEFAULT_ROW )
    double height = hb_parnd( 2 ) ;
    uint8_t hide_unused_rows = hb_parni( 3 ) ;
 
-   worksheet_set_default_row( self, height, hide_unused_rows ); 
+   if( self )
+      worksheet_set_default_row( self, height, hide_unused_rows ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1670,10 +1840,15 @@ HB_FUNC( WORKSHEET_INSERT_IMAGE_OPT )
    const char *filename = hb_parcx( 4 ) ;
    PHB_ITEM pHash = hb_param( 5, HB_IT_HASH );
 
-   lxw_image_options *image_data = image_options( pHash ) ;
+   if( self )
+   {
+      lxw_image_options *image_data = image_options( pHash ) ;
 
-   hb_retni( worksheet_insert_image_opt( self, row_num, col_num, filename, image_data ) ); 
-   hb_xfree( image_data );
+      hb_retni( worksheet_insert_image_opt( self, row_num, col_num, filename, image_data ) ); 
+      hb_xfree( image_data );
+   }
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 /*
    PHB_ITEM pHash = hb_param( 5, HB_IT_HASH );
 
@@ -1793,7 +1968,10 @@ HB_FUNC( WORKSHEET_INSERT_IMAGE )
    lxw_col_t col_num = hb_parni( 3 ) ;
    const char *filename = hb_parcx( 4 ) ;
 
-   hb_retni( worksheet_insert_image( self, row_num, col_num, filename ) ); 
+   if( self )
+      hb_retni( worksheet_insert_image( self, row_num, col_num, filename ) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1869,7 +2047,10 @@ HB_FUNC( WORKSHEET_INSERT_CHART )
    lxw_col_t col_num = hb_parni( 3 ) ;
    lxw_chart *chart = hb_parptr(4 ) ;
 
-   hb_retni( worksheet_insert_chart( self, row_num, col_num, chart) ); 
+   if( self )
+      hb_retni( worksheet_insert_chart( self, row_num, col_num, chart) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
@@ -1895,7 +2076,10 @@ HB_FUNC( WORKSHEET_DATA_VALIDATION_RANGE )
    lxw_col_t last_col = hb_parni( 5 ) ;
    lxw_data_validation *validation = hb_parptr(6 ) ;
 
-   hb_retni( worksheet_data_validation_range( self, first_row, first_col, last_row, last_col, validation ) ); 
+   if( self )
+      hb_retni( worksheet_data_validation_range( self, first_row, first_col, last_row, last_col, validation ) ); 
+   else 
+      hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 
