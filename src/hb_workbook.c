@@ -21,29 +21,41 @@
 #include "hbapierr.h"
 #include "hbapiitm.h"
 
+typedef struct
+{
+   lxw_workbook * workbook;
+} HB_WORKBOOK_GC, * PHB_WORKBOOK_GC;
 
 static HB_GARBAGE_FUNC( XLSXWorkbook_release )
 {
-//	 printf( "Chiamato hb_XLSXWorkbook_release 2\n" );
-   void ** ph = ( void ** ) Cargo;
+   printf( "Chiamato hb_XLSXWorkbook_release 2\n" );
+   PHB_WORKBOOK_GC pGC = ( PHB_WORKBOOK_GC ) Cargo;
 
    /* Check if pointer is not NULL to avoid multiple freeing */
-   if( ph && *ph )
+   if( pGC->workbook )
    {
       /* Destroy the object */
-//	  printf( "Chiamato hb_XLSXWorkbook_release 3a\n" );
-      // lxw_workbook_free(  *ph );
-//	  printf( "Chiamato hb_XLSXWorkbook_release 3b\n" );
+      printf( "Chiamato hb_XLSXWorkbook_release 3a\n" );
+      lxw_workbook_free( pGC->workbook );
+      printf( "Chiamato hb_XLSXWorkbook_release 3b\n" );
 
       /* set pointer to NULL to avoid multiple freeing */
-      *ph = NULL;
+      pGC->workbook = NULL;
    }
+}
+
+static HB_GARBAGE_FUNC( hb_workbook_mark )
+{
+   PHB_WORKBOOK_GC pGC = ( PHB_WORKBOOK_GC ) Cargo;
+
+   if( pGC->workbook )
+      hb_gcMark( pGC->workbook );
 }
 
 static const HB_GC_FUNCS s_gcXLSXWorkbookFuncs =
 {
    XLSXWorkbook_release,
-   hb_gcDummyMark
+   hb_workbook_mark
 };
 
 void hb_XLSXWorkbook_ret( lxw_workbook * p )
@@ -51,11 +63,10 @@ void hb_XLSXWorkbook_ret( lxw_workbook * p )
     // fprintf( stderr,"Chiamato hb_XLSXWorkbook_ret\n" );
    if( p )
    {
-      void ** ph = ( void ** ) hb_gcAllocate( sizeof( lxw_workbook * ), &s_gcXLSXWorkbookFuncs );
+      PHB_WORKBOOK_GC pGC = ( PHB_WORKBOOK_GC ) hb_gcAllocate( sizeof( HB_WORKBOOK_GC ), &s_gcXLSXWorkbookFuncs );
+      pGC->workbook = p ;
 
-      *ph = p;
-
-      hb_retptrGC( ph );
+      hb_retptrGC( pGC );
    }
    else
       hb_retptr( NULL );
@@ -63,16 +74,29 @@ void hb_XLSXWorkbook_ret( lxw_workbook * p )
 
 lxw_workbook * hb_XLSXWorkbook_par( int iParam )
 {
-   void ** ph = ( void ** ) hb_parptrGC( &s_gcXLSXWorkbookFuncs, iParam );
+   // void ** ph = ( void ** ) hb_parptrGC( &s_gcXLSXWorkbookFuncs, iParam );
 
-   return ph ? ( lxw_workbook * ) *ph : NULL;
+   PHB_WORKBOOK_GC pGC = ( PHB_WORKBOOK_GC ) hb_parptrGC( &s_gcXLSXWorkbookFuncs, iParam ); 
+
+   if ( pGC && pGC->workbook )
+	   return pGC->workbook;
+   else
+	   return NULL;
+
+
+   //return ph ? ( lxw_workbook * ) *ph : NULL;
 }
 
 lxw_workbook * hb_XLSXWorkbook_item( PHB_ITEM pValue )
 {
-   void ** ph = ( void ** ) hb_itemGetPtrGC( pValue, &s_gcXLSXWorkbookFuncs );
+   PHB_WORKBOOK_GC pGC = ( PHB_WORKBOOK_GC ) hb_itemGetPtrGC( pValue, &s_gcXLSXWorkbookFuncs );
 
-   return ph ? ( lxw_workbook * ) *ph : NULL;
+   if ( pGC && pGC->workbook )
+	   return pGC->workbook;
+   else
+	   return NULL;
+
+   // return ph ? ( lxw_workbook * ) *ph : NULL;
 }
 
 /*****************************************************************************
@@ -305,11 +329,12 @@ HB_FUNC( WORKBOOK_ADD_FORMAT )
 HB_FUNC( WORKBOOK_CLOSE )
 { 
    int i;
-   lxw_workbook *self = hb_XLSXWorkbook_par( 1 ) ;
-   
-   if ( self ) 
+   PHB_WORKBOOK_GC pGC = ( PHB_WORKBOOK_GC ) hb_parptrGC( &s_gcXLSXWorkbookFuncs, 1 ); 
+   printf("Workbook_close\n");
+   if ( pGC && pGC->workbook )
    {
-      i = workbook_close( self ); 
+      i = workbook_close( pGC->workbook ); 
+      pGC->workbook = NULL;
       hb_retni( i ); 
    }
    else
