@@ -24,8 +24,14 @@ PROCEDURE Main()
    format_set_bold( fCenter )
    format_set_align( fCenter, 2 )
 
+   worksheet_set_header( worksheet, "questo header" )
+   worksheet_set_footer( worksheet, "questo footer" )
+
    worksheet_set_column( worksheet2, 0, 0, 50 )
-   worksheet_write_string( worksheet2, 0, 0, "This is workshhet 2", fCenter )
+ 
+   worksheet_write_string( worksheet2, 0, 0, "This is worksheet 2", fCenter )
+   worksheet_write_string( worksheet2, 1, 1, xmlEncode(hb_OEMToAnsi("Questo Š il worksheet 2")), fCenter )
+   ? xmlEncode(hb_OEMToAnsi("Questo Š il worksheet 2"))
    /* Change the column width for clarity. */
    // TO TEST FOR ERRORS worksheet_set_column( workbook /*worksheet*/, 0, 0, 20 )
    worksheet_set_column( worksheet, 0, 0, 20 )

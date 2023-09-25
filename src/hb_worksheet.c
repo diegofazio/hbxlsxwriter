@@ -862,6 +862,50 @@ worksheet_write_comment(lxw_worksheet *self,
 
  */
 
+
+//        hidden = user_options->hidden;
+//        level = user_options->level;
+//        collapsed = user_options->collapsed;
+
+
+lxw_row_col_options * hash2row_col_options( PHB_ITEM pHash )
+{
+   if( HB_IS_HASH( pHash ) )
+   {
+      lxw_row_col_options *properties = (lxw_row_col_options *) hb_xalloc( sizeof(lxw_row_col_options) ); 
+ 
+      memset( properties, 0, sizeof( lxw_row_col_options ) );
+
+      HB_SIZE nLen = hb_hashLen( pHash ), nPos = 0;
+
+      while( ++nPos <= nLen )
+      {
+         PHB_ITEM pKey = hb_hashGetKeyAt( pHash, nPos );
+         PHB_ITEM pValue = hb_hashGetValueAt( pHash, nPos );
+         if( pKey && pValue )
+         {
+            char *key = (char *)hb_itemGetC( pKey );
+            if( HB_IS_NUMERIC( pValue ) )
+            {
+               if( HB_IS_NUMINT( pValue ) )
+	       {
+                  HB_MAXINT value = hb_itemGetNInt( pValue );
+                  if( hb_stricmp( key, "hidden" ) == 0 )
+                     properties->hidden = value;
+                  else if( hb_stricmp( key, "level" ) == 0 )
+                     properties->level = value;
+                  else if( hb_stricmp( key, "collapsed" ) == 0 )
+                     properties->collapsed = value;
+	       }
+	    }
+	 }
+      }
+      return( properties );
+   }
+   else
+      return NULL;
+}
+   
 /*
  * Set the properties of a single column or a range of columns with options.
  *
