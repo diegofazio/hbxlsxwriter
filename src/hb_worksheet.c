@@ -145,6 +145,7 @@ lxw_image_options *image_options( PHB_ITEM pHash )
  * lxw_worksheet_find_row(lxw_worksheet *self, lxw_row_t row_num)
  * 
  */
+/*
 HB_FUNC( LXW_WORKSHEET_FIND_ROW )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
@@ -155,7 +156,7 @@ HB_FUNC( LXW_WORKSHEET_FIND_ROW )
    else 
       hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
-
+*/
 /*
  * Find but don't create a cell object for a given row object and col number.
  *
@@ -163,6 +164,7 @@ HB_FUNC( LXW_WORKSHEET_FIND_ROW )
  * lxw_worksheet_find_cell_in_row(lxw_row *row, lxw_col_t col_num)
  *
  */
+/*
 HB_FUNC( LXW_WORKSHEET_FIND_CELL )
 { 
    lxw_row *row = hb_parptr(1 ) ;
@@ -170,7 +172,7 @@ HB_FUNC( LXW_WORKSHEET_FIND_CELL )
 
    hb_retptr( lxw_worksheet_find_cell_in_row( row, col_num) );
 }
-
+*/
 
 
 /*
@@ -180,6 +182,7 @@ HB_FUNC( LXW_WORKSHEET_FIND_CELL )
  * lxw_worksheet_new(lxw_worksheet_init_data *init_data)
  *
  */
+/*
 HB_FUNC( LXW_WORKSHEET_NEW )
 { 
    lxw_worksheet_init_data *init_data = hb_parptr( 1 ) ;
@@ -193,7 +196,7 @@ HB_FUNC( LXW_WORKSHEET_NEW )
    }
 }
 
-
+*/
 
 /*
  * Free a worksheet object.
@@ -202,13 +205,14 @@ HB_FUNC( LXW_WORKSHEET_NEW )
  * lxw_worksheet_free(lxw_worksheet *worksheet)
  *
  */
+/*
 HB_FUNC( LXW_WORKSHEET_FREE )
 { 
    lxw_worksheet *worksheet = hb_parptr( 1 ) ;
 
    lxw_worksheet_free( worksheet ) ; 
 }
-
+*/
 
 
 /*
@@ -361,6 +365,7 @@ HB_FUNC( LXW_WORKSHEET_PREPARE_CHART )
  * void
  * lxw_worksheet_write_single_row(lxw_worksheet *self)
  */
+/*
 HB_FUNC( LXW_WORKSHEET_WRITE_SINGLE_ROW )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
@@ -371,7 +376,7 @@ HB_FUNC( LXW_WORKSHEET_WRITE_SINGLE_ROW )
       hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
-
+*
 
 /*
  * External functions to call intern XML methods shared with chartsheet.
@@ -379,6 +384,7 @@ HB_FUNC( LXW_WORKSHEET_WRITE_SINGLE_ROW )
  * void
  * lxw_worksheet_write_sheet_views(lxw_worksheet *self)
  */
+/*
 HB_FUNC( LXW_WORKSHEET_WRITE_SHEET_VIEWS )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
@@ -389,7 +395,7 @@ HB_FUNC( LXW_WORKSHEET_WRITE_SHEET_VIEWS )
       hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
-
+*/
 
 /*
  * Assemble and write the XML file.
@@ -397,6 +403,7 @@ HB_FUNC( LXW_WORKSHEET_WRITE_SHEET_VIEWS )
  * void
  * lxw_worksheet_assemble_xml_file(lxw_worksheet *self)
  */
+/*
 HB_FUNC( LXW_WORKSHEET_ASSEMBLE_XML_FILE )
 { 
    lxw_worksheet *self = hb_parptr( 1 ) ;
@@ -407,7 +414,7 @@ HB_FUNC( LXW_WORKSHEET_ASSEMBLE_XML_FILE )
       hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
-
+*/
 
 
 /*
@@ -496,8 +503,17 @@ HB_FUNC( WORKSHEET_WRITE_FORMULA_NUM )
       hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
+/* FP: missing
+ * Write a formula with a string result to a cell in Excel.
+lxw_error
+worksheet_write_formula_str(lxw_worksheet *self,
+                            lxw_row_t row_num,
+                            lxw_col_t col_num,
+                            const char *formula,
+                            lxw_format *format, const char *result)
 
 
+ */
 
 /*
  * Write a formula with a default result to a cell in Excel .
@@ -827,9 +843,24 @@ HB_FUNC( WORKSHEET_WRITE_RICH_STRING )
 
 }
 
+/* FP: to do
+ * Write a comment to a worksheet cell in Excel.
+lxw_error
+worksheet_write_comment_opt(lxw_worksheet *self,
+                            lxw_row_t row_num, lxw_col_t col_num,
+                            const char *text, lxw_comment_options *options)
 
 
+ */
 
+/* FP: to do
+ * Write a comment to a worksheet cell in Excel.
+lxw_error
+worksheet_write_comment(lxw_worksheet *self,
+                        lxw_row_t row_num, lxw_col_t col_num,
+                        const char *string)
+
+ */
 
 /*
  * Set the properties of a single column or a range of columns with options.
