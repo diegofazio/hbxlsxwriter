@@ -925,10 +925,14 @@ HB_FUNC( WORKSHEET_SET_COLUMN_OPT )
    lxw_col_t lastcol = hb_parni( 3 ) ;
    double width = hb_parnd( 4 ) ;
    lxw_format *format = hb_XLSXFormat_par(5); // hb_parptr(5 ) ;
-   lxw_row_col_options *user_options = hb_parptr(6 ) ;
+   PHB_ITEM pHash = hb_param( 6, HB_IT_HASH );
+
 
    if( self )
+   {
+      lxw_row_col_options *user_options = hash2row_col_options( pHash ) ;
       hb_retni( worksheet_set_column_opt( self, firstcol, lastcol, width, format, user_options) ); 
+   }
    else 
       hb_errRT_BASE( EG_ARG, 2020, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
