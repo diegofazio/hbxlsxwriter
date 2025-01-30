@@ -4,7 +4,7 @@
  * Conditional formatting allows you to apply a format to a cell or a
  * range of cells based on certain criteria.
  *
- * Copyright 2014-2021, John McNamara, jmcnamara@cpan.org
+ * Copyright 2014-2024, John McNamara, jmcnamara@cpan.org
  *
  */
 
@@ -61,7 +61,8 @@ int main() {
     format_set_font_color(format2, 0x006100);
 
     /* Create a single conditional format object to reuse in the examples. */
-    lxw_conditional_format *conditional_format = calloc(1, sizeof(lxw_conditional_format));
+    lxw_conditional_format *conditional_format =
+        (lxw_conditional_format *)calloc(1, sizeof(lxw_conditional_format));
 
     /*
      * Example 1. Conditional formatting based on simple cell based criteria.

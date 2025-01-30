@@ -3,7 +3,8 @@
  *
  * Test to compare output against Excel files.
  *
- * Copyright 2014-2022, John McNamara, jmcnamara@cpan.org
+ * SPDX-License-Identifier: BSD-2-Clause
+ * Copyright 2014-2024, John McNamara, jmcnamara@cpan.org.
  *
  */
 
@@ -13,7 +14,7 @@ int main() {
 
     lxw_workbook  *workbook  = workbook_new("test_data_validation02.xlsx");
     lxw_worksheet *worksheet = workbook_add_worksheet(workbook, NULL);
-    char *list[] = {"Foo", "Bar", "Baz", NULL};
+    const char* list[] = {"Foo", "Bar", "Baz", NULL};
 
     lxw_data_validation *data_validation = calloc(1, sizeof(lxw_data_validation));
     data_validation->validate = LXW_VALIDATION_TYPE_LIST;

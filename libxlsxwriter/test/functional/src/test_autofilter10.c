@@ -3,7 +3,8 @@
  *
  * Test to compare output against Excel files.
  *
- * Copyright 2014-2022, John McNamara, jmcnamara@cpan.org
+ * SPDX-License-Identifier: BSD-2-Clause
+ * Copyright 2014-2024, John McNamara, jmcnamara@cpan.org.
  *
  */
 
@@ -107,7 +108,7 @@ int main() {
 
     worksheet_autofilter(worksheet, 0, 0, 50, 3);
 
-    char* list[] = {"East", "North", "South", "Blanks", NULL};
+    const char* list[] = {"East", "North", "South", "Blanks", NULL};
 
     worksheet_filter_list(worksheet, 0, list);
 

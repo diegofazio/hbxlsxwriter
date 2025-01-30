@@ -2,7 +2,7 @@
  * Example of adding an autofilter to a worksheet in Excel using
  * libxlsxwriter.
  *
- * Copyright 2014-2021, John McNamara, jmcnamara@cpan.org
+ * Copyright 2014-2024, John McNamara, jmcnamara@cpan.org
  *
  */
 
@@ -268,7 +268,7 @@ int main() {
     worksheet_autofilter(worksheet5, 0, 0, 50, 3);
 
     /* Add the filter criteria. */
-    char* list[] = {"East", "North", "South", NULL};
+    const char* list[] = {"East", "North", "South", NULL};
 
     worksheet_filter_list(worksheet5, 0, list);
 

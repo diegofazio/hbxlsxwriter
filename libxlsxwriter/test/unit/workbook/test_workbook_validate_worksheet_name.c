@@ -1,7 +1,8 @@
 /*
  * Tests for the libxlsxwriter library.
  *
- * Copyright 2014-2022, John McNamara, jmcnamara@cpan.org
+ * SPDX-License-Identifier: BSD-2-Clause
+ * Copyright 2014-2024, John McNamara, jmcnamara@cpan.org.
  *
  */
 
@@ -10,6 +11,7 @@
 
 #include "../../../include/xlsxwriter/workbook.h"
 #include "../../../include/xlsxwriter/shared_strings.h"
+
 
 /* Test a valid sheet name. */
 CTEST(workbook, validate_worksheet_name01) {
@@ -139,6 +141,34 @@ CTEST(workbook, validate_worksheet_name09) {
 
     lxw_error exp = LXW_ERROR_SHEETNAME_ALREADY_USED;
     lxw_error got = workbook_validate_sheet_name(workbook, "ABCDE");
+
+    ASSERT_EQUAL(exp, got);
+
+    lxw_workbook_free(workbook);
+}
+
+/* Test for empty sheet name. */
+CTEST(workbook, validate_worksheet_name10) {
+
+    const char* sheetname = "";
+
+    lxw_workbook *workbook = workbook_new(NULL);
+    lxw_error exp = LXW_ERROR_PARAMETER_IS_EMPTY;
+    lxw_error got = workbook_validate_sheet_name(workbook, sheetname);
+
+    ASSERT_EQUAL(exp, got);
+
+    lxw_workbook_free(workbook);
+}
+
+/* Test for NULL sheet name. */
+CTEST(workbook, validate_worksheet_name11) {
+
+    const char* sheetname = NULL;
+
+    lxw_workbook *workbook = workbook_new(NULL);
+    lxw_error exp = LXW_ERROR_NULL_PARAMETER_IGNORED;
+    lxw_error got = workbook_validate_sheet_name(workbook, sheetname);
 
     ASSERT_EQUAL(exp, got);
 

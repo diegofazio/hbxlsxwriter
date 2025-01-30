@@ -1,7 +1,8 @@
 /*
  * Tests for the libxlsxwriter library.
  *
- * Copyright 2014-2022, John McNamara, jmcnamara@cpan.org
+ * SPDX-License-Identifier: BSD-2-Clause
+ * Copyright 2014-2024, John McNamara, jmcnamara@cpan.org.
  *
  */
 
@@ -10,9 +11,13 @@
 
 #include "../../../include/xlsxwriter/utility.h"
 
-// Test _xl_get_col().
+// Test lxw_name_to_col().
 CTEST(utility, lxw_name_to_col) {
 
+    ASSERT_EQUAL(0,     lxw_name_to_col(NULL));
+    ASSERT_EQUAL(0,     lxw_name_to_col(""));
+    ASSERT_EQUAL(0,     lxw_name_to_col("1"));
+    ASSERT_EQUAL(0,     lxw_name_to_col("A"));
     ASSERT_EQUAL(0,     lxw_name_to_col("A1"));
     ASSERT_EQUAL(1,     lxw_name_to_col("B1"));
     ASSERT_EQUAL(2,     lxw_name_to_col("C1"));
@@ -31,9 +36,13 @@ CTEST(utility, lxw_name_to_col) {
 }
 
 
-// Test _xl_get_col_2().
+// Test lxw_name_to_col_2().
 CTEST(utility, lxw_name_to_col_2) {
 
+    ASSERT_EQUAL(0,     lxw_name_to_col_2(NULL));
+    ASSERT_EQUAL(0,     lxw_name_to_col_2(""));
+    ASSERT_EQUAL(0,     lxw_name_to_col_2("AAA"));
+    ASSERT_EQUAL(0,     lxw_name_to_col_2("AAA:"));
     ASSERT_EQUAL(0,     lxw_name_to_col_2("AAA:A"));
     ASSERT_EQUAL(1,     lxw_name_to_col_2("AAA:B"));
     ASSERT_EQUAL(2,     lxw_name_to_col_2("AAA:C"));

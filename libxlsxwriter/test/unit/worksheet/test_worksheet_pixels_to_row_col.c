@@ -1,7 +1,8 @@
 /*
  * Tests for the lib_xlsx_writer library.
  *
- * Copyright 2014-2022, John McNamara, jmcnamara@cpan.org
+ * SPDX-License-Identifier: BSD-2-Clause
+ * Copyright 2014-2024, John McNamara, jmcnamara@cpan.org.
  *
  */
 
@@ -45,7 +46,7 @@ CTEST(worksheet, pixel_to_width01) {
     for (pixels = 0; pixels <= 1790; pixels++) {
         exp = pixels;
         got = width_to_pixels(_pixels_to_width(pixels));
-        ASSERT_DOUBLE(exp, got);
+        ASSERT_DBL_NEAR(exp, got);
     }
 }
 
@@ -59,6 +60,6 @@ CTEST(worksheet, pixel_to_height01) {
     for (pixels = 0; pixels <= 545; pixels++) {
         exp = pixels;
         got = height_to_pixels(_pixels_to_height(pixels));
-        ASSERT_DOUBLE(exp, got);
+        ASSERT_DBL_NEAR(exp, got);
     }
 }

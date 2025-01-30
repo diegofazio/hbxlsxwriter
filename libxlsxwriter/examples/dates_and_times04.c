@@ -1,7 +1,7 @@
 /*
  * Example of writing dates and times in Excel using different date formats.
  *
- * Copyright 2014-2021, John McNamara, jmcnamara@cpan.org
+ * Copyright 2014-2024, John McNamara, jmcnamara@cpan.org
  *
  */
 
@@ -18,7 +18,7 @@ int main() {
     /* Examples date and time formats. In the output file compare how changing
      * the format strings changes the appearance of the date.
      */
-    char *date_formats[] = {
+    const char *date_formats[] = {
         "dd/mm/yy",
         "mm/dd/yy",
         "dd m yy",

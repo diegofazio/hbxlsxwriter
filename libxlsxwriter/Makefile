@@ -2,7 +2,8 @@
 #
 # Makefile for libxlsxwriter library.
 #
-# Copyright 2014-2022, John McNamara, jmcnamara@cpan.org
+# SPDX-License-Identifier: BSD-2-Clause
+# Copyright 2014-2024, John McNamara, jmcnamara@cpan.org.
 #
 
 # Keep the output quiet by default.
@@ -63,6 +64,10 @@ universal_binary :
 # Build the example programs.
 examples : all
 	$(Q)$(MAKE) -C examples
+
+# Build the example programs with CPP for compatibility checking.
+examples_cpp : all
+	$(Q)$(MAKE) -C examples CC=$(CXX)
 
 # Clean src and test directories.
 clean :
@@ -179,6 +184,11 @@ coverity: clean_src third_party
 	$(Q)tar -czf libxlsxwriter-coverity.tgz cov-int
 	$(Q)$(MAKE) -C src clean
 	$(Q)rm -f  lib/*
+
+# Run address sanitiser.
+address_sanitiser: third_party
+	$(Q)$(MAKE) -C src libxlsxwriter.a CFLAGS="-fsanitize=address -O1 -fsanitize-coverage=trace-pc-guard -fno-omit-frame-pointer -g"
+	$(Q)$(MAKE) -C examples            CFLAGS="-fsanitize=address -O1 -fsanitize-coverage=trace-pc-guard -fno-omit-frame-pointer -g"
 
 # Run gcov coverage analysis.
 gcov: third_party
