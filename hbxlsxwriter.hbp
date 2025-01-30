@@ -89,6 +89,10 @@ libxlsxwriter/src/vml.c
 libxlsxwriter/src/workbook.c
 libxlsxwriter/src/worksheet.c
 libxlsxwriter/src/xmlwriter.c
+libxlsxwriter/src/rich_value.c
+libxlsxwriter/src/rich_value_rel.c
+libxlsxwriter/src/rich_value_structure.c
+libxlsxwriter/src/rich_value_types.c
 {allbcc}libxlsxwriter/bcc_comp.c
 
 -cflag=-DUSE_NO_MD5

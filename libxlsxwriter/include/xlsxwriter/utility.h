@@ -19,7 +19,9 @@
 
 #include <stdint.h>
 #ifndef _MSC_VER
+#ifndef __TURBOC__
 #include <strings.h>
+#endif
 #endif
 #include "common.h"
 #include "xmlwriter.h"
