@@ -35,6 +35,10 @@ src/vml.c
 src/workbook.c
 src/worksheet.c
 src/xmlwriter.c
+src/rich_value.c
+src/rich_value_rel.c
+src/rich_value_structure.c
+src/rich_value_types.c
 {allbcc}bcc_comp.c
 
 -cflag=-DUSE_NO_MD5
