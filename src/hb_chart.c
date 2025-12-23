@@ -1594,59 +1594,61 @@ HB_FUNC( CHART_SET_ROTATION )
 
 HB_FUNC( CHART_POINT_NEW )
 {
-    lxw_chart_point *pt = (lxw_chart_point *) hb_xgrab( sizeof(lxw_chart_point) );
-    memset(pt, 0, sizeof(lxw_chart_point));
-    hb_retptr(pt);
+   lxw_chart_point *pt = (lxw_chart_point *) hb_xgrab( sizeof(lxw_chart_point) );
+   memset(pt, 0, sizeof(lxw_chart_point));
+   hb_retptr(pt);
 }
 
 HB_FUNC( CHART_FILL_NEW )
 {
-    lxw_chart_fill *fill = (lxw_chart_fill *) hb_xgrab( sizeof(lxw_chart_fill) );
-    memset(fill, 0, sizeof(lxw_chart_fill));
+   lxw_chart_fill *fill = (lxw_chart_fill *) hb_xgrab( sizeof(lxw_chart_fill) );
+   memset(fill, 0, sizeof(lxw_chart_fill));
 
-    fill->color = hb_parni(1);
+   fill->color = hb_parni(1);
 
-    hb_retptr(fill);
+   hb_retptr(fill);
 }
 
 HB_FUNC( CHART_POINT_SET_FILL )
 {
-    lxw_chart_point *pt  = (lxw_chart_point *) hb_parptr(1);
-    lxw_chart_fill  *fill = (lxw_chart_fill *) hb_parptr(2);
+   lxw_chart_point *pt  = (lxw_chart_point *) hb_parptr(1);
+   lxw_chart_fill  *fill = (lxw_chart_fill *) hb_parptr(2);
 
-    pt->fill = fill;
+   pt->fill = fill;
 
-    hb_ret();
+   hb_ret();
 }
 
 HB_FUNC( CHART_SERIES_SET_POINTS )
 {
-    lxw_chart_series *series = (lxw_chart_series *) hb_parptr(1);
-    PHB_ITEM aPoints = hb_param(2, HB_IT_ARRAY);
+   lxw_chart_series *series = (lxw_chart_series *) hb_parptr(1);
+   PHB_ITEM aPoints = hb_param(2, HB_IT_ARRAY);
 
-    if (!aPoints) {
-        hb_retni(LXW_ERROR_NULL_PARAMETER_IGNORED);
-        return;
-    }
+   if (!aPoints) {
+     hb_retni(LXW_ERROR_NULL_PARAMETER_IGNORED);
+     return;
+   }
 
-    HB_SIZE n = hb_arrayLen(aPoints);
+   HB_SIZE n = hb_arrayLen(aPoints);
 
-    /* Create C array + NULL end */
-    lxw_chart_point **points =
-        (lxw_chart_point **) hb_xgrab( sizeof(lxw_chart_point*) * (n + 1) );
+   /* Create C array + NULL end */
+   lxw_chart_point **points =
+     (lxw_chart_point **) hb_xgrab( sizeof(lxw_chart_point*) * (n + 1) );
 
-    for (HB_SIZE i = 1; i <= n; i++) {
-        points[i - 1] = (lxw_chart_point *) hb_arrayGetPtr(aPoints, i);
-    }
+   HB_SIZE i;
 
-    /* NULL terminator */
-    points[n] = NULL;
+   for (i = 1; i <= n; i++) {
+     points[i - 1] = (lxw_chart_point *) hb_arrayGetPtr(aPoints, i);
+   }
 
-    int ret = chart_series_set_points(series, points);
+   /* NULL terminator */
+   points[n] = NULL;
 
-    hb_xfree(points);
+   int ret = chart_series_set_points(series, points);
 
-    hb_retni(ret);
+   hb_xfree(points);
+
+   hb_retni(ret);
 }
 
 //eof
